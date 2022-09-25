@@ -1,18 +1,47 @@
 <div class="container p-3">
   <h2>Dashboard</h2>
+
   <div class="row">
-    <div
-      *ngFor="let _ of [].constructor(6)"
-      class="card text-white bg-primary p-0 col-md-3 mx-2 my-2"
-    >
-      <div class="card-header w-100">Header</div>
-      <div class="card-body">
-        <h4 class="card-title">Primary card title</h4>
-        <p class="card-text">
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </p>
-      </div>
-    </div>
+    <h4 class="text-primary mt-2">Students</h4>
+    <select [(ngModel)]="status" class="form-select">
+      <option value="online">Online</option>
+      <option value="offline">Offline</option>
+    </select>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Surname</th>
+          <th scope="col">Birthdate</th>
+          <th scope="col">Age</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students" class="bg-blue">
+          <ng-container *ngIf="student.status === status">
+            <td class="pt-2 d-flex align-items-center">
+              <div class="avatar d-inline-block bg-success rounded-circle">
+                {{ student.name | initialLeters }}
+              </div>
+              <div class="pl-lg-5 pl-md-3 px-3 name">{{ student.name }}</div>
+            </td>
+            <td class="pt-3 mt-1">{{ student.surname }}</td>
+            <td class="pt-3 mt-1">{{ student.birthdate }}</td>
+            <td class="pt-3">{{ student.age }}</td>
+            <td
+              class="pt-3"
+              [ngClass]="
+                student.status === 'online' ? 'text-success' : 'text-danger'
+              "
+            >
+              <i class="fa fa-solid fa-circle"></i> {{ student.status }}
+            </td>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
