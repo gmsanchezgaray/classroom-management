@@ -1,0 +1,31 @@
+<div class="container mt-5">
+  <div class="table-responsive">
+    <table mat-table [dataSource]="users$" class="table table-striped">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let user" class="pt-2">{{ user.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let user" class="pt-2">{{ user.email }}</td>
+      </ng-container>
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef>Gender</th>
+        <td mat-cell *matCellDef="let user" class="pt-2">{{ user.gender }}</td>
+      </ng-container>
+      <ng-container matColumnDef="birthdate">
+        <th mat-header-cell *matHeaderCellDef>Birthdate</th>
+        <td mat-cell *matCellDef="let user" class="pt-2">
+          {{ user.birthdate | date: "dd/MM/YYYY" }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="admin">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let user" class="pt-2">{{ user.admin }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>

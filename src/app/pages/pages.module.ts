@@ -1,14 +1,34 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PagesComponent } from './pages.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { FormsModule } from '@angular/forms';
-import { SharedModule } from '../shared/shared.module';
+import { MaterialModule } from '../material/material.module';
+
+import { PagesRoutingModule } from './pages-module.routing';
+import { RouterModule } from '@angular/router';
+
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { UsersComponent } from './users/users.component';
+import { ManagementComponent } from './management/management.component';
+import { CoursesComponent } from './courses/courses.component';
+import { PagesComponent } from './pages.component';
 
 @NgModule({
-  declarations: [PagesComponent, DashboardComponent],
-  imports: [CommonModule, PipesModule, FormsModule, SharedModule],
-  exports: [PagesComponent],
+  declarations: [
+    DashboardComponent,
+    ManagementComponent,
+    UsersComponent,
+    CoursesComponent,
+    PagesComponent,
+  ],
+  imports: [
+    CommonModule,
+    PipesModule,
+    FormsModule,
+    PagesRoutingModule,
+    RouterModule,
+    MaterialModule,
+  ],
+  exports: [DashboardComponent],
 })
 export class PagesModule {}
