@@ -1,4 +1,126 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.snackbar {
+  &--success {
+    background-color: rgb(47, 179, 128);
+    color: #fefefe;
+    border-color: #c1e8d9;
+    padding: 24px 16px !important;
+    .mat-simple-snackbar {
+      font-size: 15px;
+      &-action {
+        margin: 0px;
+        padding: 0.35em 0.35em;
+
+        button {
+          box-sizing: content-box;
+          width: 1em;
+          height: 1em;
+          padding: 0.25em 0.25em;
+          color: #fefefe;
+          background: transparent
+            url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e")
+            center/1em auto no-repeat;
+          border: 0;
+          border-radius: 0.375rem;
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+  &--error {
+    background-color: rgb(218, 41, 46);
+    color: #fefefe;
+
+    border-color: #f4bfc0;
+    padding: 24px 16px !important;
+    .mat-simple-snackbar {
+      font-size: 15px;
+      &-action {
+        margin: 0px;
+        padding: 0.35em 0.35em;
+
+        button {
+          box-sizing: content-box;
+          width: 1em;
+          height: 1em;
+          padding: 0.25em 0.25em;
+          color: #fefefe;
+          background: transparent
+            url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e")
+            center/1em auto no-repeat;
+          border: 0;
+          border-radius: 0.375rem;
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+  &--warning {
+    background-color: rgb(244, 189, 97);
+    color: #fefefe;
+
+    border-color: #fcebd0;
+    padding: 24px 16px !important;
+
+    .mat-simple-snackbar {
+      font-size: 15px;
+      &-action {
+        margin: 0px;
+        padding: 0.35em 0.35em;
+
+        button {
+          box-sizing: content-box;
+          width: 1em;
+          height: 1em;
+          padding: 0.25em 0.25em;
+          color: #fefefe;
+          background: transparent
+            url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e")
+            center/1em auto no-repeat;
+          border: 0;
+          border-radius: 0.375rem;
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+
+  &--info {
+    background-color: rgb(40, 123, 181);
+    color: #fefefe;
+    border-color: #bfd7e9;
+    padding: 24px 16px !important;
+
+    .mat-simple-snackbar {
+      font-size: 15px;
+      &-action {
+        margin: 0px;
+        padding: 0.35em 0.35em;
+
+        button {
+          box-sizing: content-box;
+          width: 1em;
+          height: 1em;
+          padding: 0.25em 0.25em;
+          color: #fefefe;
+          background: transparent
+            url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e")
+            center/1em auto no-repeat;
+          border: 0;
+          border-radius: 0.375rem;
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}

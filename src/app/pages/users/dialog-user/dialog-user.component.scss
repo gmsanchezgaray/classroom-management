@@ -1,0 +1,75 @@
+.form-items {
+  background-color: #f4f4f4;
+  border: 2px solid #eeebeb;
+  padding: 40px;
+  display: inline-block;
+  width: 100%;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  text-align: left;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+
+.mat-dialog-content {
+  overflow: hidden;
+  max-height: none;
+  margin: 0;
+}
+
+.form-items input[type="text"],
+.form-items input[type="password"],
+.form-items input[type="email"],
+.form-items select {
+  width: 100%;
+  padding: 9px 20px;
+  text-align: left;
+  border: 0;
+  outline: 0;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 15px;
+  font-weight: 300;
+  color: #8d8d8d;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  margin-top: 16px;
+}
+
+.btn-primary {
+  outline: none;
+  border: 0px;
+  box-shadow: none;
+}
+
+.form-items textarea {
+  position: static !important;
+  width: 100%;
+  padding: 8px 20px;
+  border-radius: 6px;
+  text-align: left;
+  background-color: #fff;
+  border: 0;
+  font-size: 15px;
+  font-weight: 300;
+  outline: none;
+  resize: none;
+  height: 120px;
+  -webkit-transition: none;
+  transition: none;
+  margin-bottom: 14px;
+}
+
+.mv-up {
+  margin-top: -9px !important;
+  margin-bottom: 8px !important;
+}
+
+.invalid-feedback {
+  color: #ff606e;
+}
+
+.valid-feedback {
+  color: #2acc80;
+}

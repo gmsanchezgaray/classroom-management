@@ -8,6 +8,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -18,6 +22,10 @@ import { MatTableModule } from '@angular/material/table';
     MatSidenavModule,
     MatListModule,
     MatTableModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatSnackBarModule,
+    MatDialogModule,
   ],
   exports: [
     HttpClientModule,
@@ -27,6 +35,10 @@ import { MatTableModule } from '@angular/material/table';
     MatSidenavModule,
     MatListModule,
     MatTableModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatSnackBarModule,
+    MatDialogModule,
   ],
 })
 export class MaterialModule {}

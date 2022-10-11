@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { UsersComponent } from './users/users.component';
 import { CoursesComponent } from './courses/courses.component';
-import { ManagementComponent } from './management/management.component';
 
 const routes: Routes = [
   {
@@ -19,11 +18,6 @@ const routes: Routes = [
       {
         path: 'courses',
         component: CoursesComponent,
-        pathMatch: 'full',
-      },
-      {
-        path: 'management',
-        component: ManagementComponent,
         pathMatch: 'full',
       },
     ],
