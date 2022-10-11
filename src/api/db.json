@@ -1,77 +1,88 @@
 {
   "students": [
     {
-      "name": "Leona Hunt",
+      "name": "Leona",
+      "surname": "Hunt",
       "email": "lhunt@gmail.com@gmail.com",
       "gender": "Female",
       "birthdate": "October 16, 1991",
       "admin": true
     },
     {
-      "name": "Laura Lynn",
+      "name": "Laura ",
+      "surname": "Lynn",
       "email": "LLynn@gmail.com@gmail.com",
       "birthdate": "September 3, 1949",
       "gender": "Female",
       "admin": true
     },
     {
-      "name": "Carlos Villarreal",
+      "name": "Carlos ",
+      "surname": "Villarreal",
       "email": "villarreal@gmail.com",
       "birthdate": "March 29, 1978",
       "gender": "Male",
       "admin": false
     },
     {
-      "name": "Zachary Gomez",
+      "name": "Zachary ",
+      "surname": "Gomez",
       "email": "zGomez@gmail.com",
       "birthdate": "July 1, 1999",
       "gender": "Male",
       "admin": true
     },
     {
-      "name": "Aaron Decker",
+      "name": "Aaron",
+      "surname": "Decker",
       "email": "aDecker@gmail.com",
       "birthdate": "December 16, 1954",
       "gender": "Male",
       "admin": true
     },
     {
-      "name": "Harland Arnold",
+      "name": "Harland ",
+      "surname": "Arnold",
       "email": "hArnold@gmail.com",
       "birthdate": "July 9, 1983",
       "gender": "Male",
       "admin": true
     },
     {
-      "name": "Fletcher Argueta",
+      "name": "Fletcher ",
+      "surname": "Argueta",
       "email": "fArgueta@gmail.com",
       "birthdate": "February 15, 1987",
       "gender": "Male",
       "admin": false
     },
     {
-      "name": "Walter Abbott",
+      "name": "Walter ",
+      "surname": "Abbott",
       "email": "wAbbott@gmail.com",
       "birthdate": "December 2, 1956",
       "gender": "Male",
       "admin": false
     },
     {
-      "name": "Gregory Chavez",
+      "name": "Gregory ",
+      "surname": "Chavez",
       "email": "gChavez@gmail.com",
       "birthdate": "September 5, 1981",
       "gender": "Male",
       "admin": false
     },
     {
-      "name": "Charles Montalvo",
+      "name": "Charles ",
+      "surname": "Montalvo",
       "email": "cMontalvo@gmail.com",
       "birthdate": "March 24, 1937",
       "gender": "Male",
       "admin": true
     },
     {
-      "name": "Sharon Johnson",
+      "name": "Sharon ",
+      "surname": "Johnson",
       "email": "sJohnson@gmail.com",
       "birthdate": "September 17, 1942",
       "gender": "Female",

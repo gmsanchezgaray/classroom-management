@@ -12,6 +12,7 @@ import { UsersComponent } from './users/users.component';
 import { ManagementComponent } from './management/management.component';
 import { CoursesComponent } from './courses/courses.component';
 import { PagesComponent } from './pages.component';
+import { DirectivesModule } from '../directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { PagesComponent } from './pages.component';
     PagesRoutingModule,
     RouterModule,
     MaterialModule,
+    DirectivesModule,
   ],
   exports: [DashboardComponent],
 })

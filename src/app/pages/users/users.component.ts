@@ -10,7 +10,7 @@ import { UsersService } from 'src/app/services/users.service';
 export class UsersComponent implements OnInit {
   users$!: User[];
   displayedColumns: string[] = [
-    'name',
+    'fullname',
     'email',
     'gender',
     'birthdate',
