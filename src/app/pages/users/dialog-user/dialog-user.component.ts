@@ -1,13 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { UsersService } from 'src/app/services/users.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
+import { User } from 'src/app/models/user';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-dialog-user',
@@ -16,12 +21,14 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class DialogUserComponent implements OnInit {
   formUser!: FormGroup;
+  labelDiaog: string = 'Add user';
 
   constructor(
     private fb: FormBuilder,
-    private usersService: UsersService,
     private _snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<DialogUserComponent>
+    private datepipe: DatePipe,
+    public dialogRef: MatDialogRef<DialogUserComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { userToEdit: User; action: string }
   ) {
     this.formUser = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -36,7 +43,15 @@ export class DialogUserComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.formUser.patchValue(this.data.userToEdit);
+    this.formUser.controls['birthdate'].setValue(
+      this.datepipe.transform(this.data.userToEdit.birthdate, 'yyyy-MM-dd')
+    );
+    this.data.action === 'Edit'
+      ? (this.labelDiaog = 'Edit user')
+      : (this.labelDiaog = 'Add user');
+  }
   handleSubmitUser() {
     if (this.formUser.invalid) {
       this.formUser.markAllAsTouched();
@@ -49,27 +64,24 @@ export class DialogUserComponent implements OnInit {
       return;
     }
 
-    this.usersService
-      .AddUser(this.formUser.value)
-      .then((resp) => {
-        resp &&
-          this._snackBar.open('User added successfully', ' ', {
-            panelClass: ['snackbar--success'],
-            verticalPosition: 'top',
-            horizontalPosition: 'end',
-            duration: 3000,
-          });
-      })
-      .catch((err) => {
-        this._snackBar.open(`${err}`, ' ', {
-          panelClass: ['snackbar--error'],
-          verticalPosition: 'top',
-          horizontalPosition: 'end',
-          duration: 3000,
-        });
+    this.dialogRef.close(this.formUser.value);
+    if (this.data.action === 'Edit') {
+      this._snackBar.open('User edited successfully', ' ', {
+        panelClass: ['snackbar--success'],
+        verticalPosition: 'top',
+        horizontalPosition: 'end',
+        duration: 3000,
       });
+    } else {
+      this._snackBar.open('User added successfully', ' ', {
+        panelClass: ['snackbar--success'],
+        verticalPosition: 'top',
+        horizontalPosition: 'end',
+        duration: 3000,
+      });
+    }
+
     this.formUser.reset();
-    this.dialogRef.close();
   }
 
   handleCancel(event: Event) {

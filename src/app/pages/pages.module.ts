@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { PipesModule } from '../pipes/pipes.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
@@ -32,6 +32,7 @@ import { DialogUserComponent } from './users/dialog-user/dialog-user.component';
     DirectivesModule,
     ReactiveFormsModule,
   ],
+  providers: [DatePipe],
   exports: [DashboardComponent],
 })
 export class PagesModule {}
