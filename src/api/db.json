@@ -1,0 +1,53 @@
+{
+  "courses": [
+    {
+      "id": "b8a8e948-1915-3471-f644c0ce",
+      "name": "Angular",
+      "days": ["Lunes", "Martes"],
+      "schedule": "20:30 a 22:30hs",
+      "status": true,
+      "commission": 1666113670591
+    },
+    {
+      "id": "3639e7c8-16f9-ef7e-0a4da372",
+      "name": "React",
+      "days": ["Lunes", "Martes"],
+      "schedule": "20:30 a 22:30hs",
+      "status": true,
+      "commission": 1666113670535
+    },
+    {
+      "id": "0bcab04c-45da-9b7b-9f3f6d9f",
+      "name": "Angular",
+      "days": ["Martes"],
+      "schedule": "18:30 a 20:30hs",
+      "status": true,
+      "commission": 1666113670553
+    },
+    {
+      "id": "6764a716-e01c-4cda-f3099b45",
+      "name": "Vue",
+      "days": ["Lunes", "Martes", "Jueves"],
+      "email": "gonzaa.sanchezz@gmail.com",
+      "schedule": "11:30 a 14:30hs",
+      "status": true,
+      "commission": 1666113670555
+    },
+    {
+      "id": "ae3145b6-7ac4-c5b6-a95c8199",
+      "name": "Svelte",
+      "days": ["Viernes"],
+      "schedule": "14:30 a 15:30hs",
+      "status": true,
+      "commission": 166611367066
+    },
+    {
+      "id": "08796bc7-e717-834e-9ee659d1",
+      "name": "React",
+      "days": ["Jueves", "Viernes"],
+      "schedule": "16:30 a 18:30hs",
+      "status": true,
+      "commission": 1666113670536
+    }
+  ]
+}

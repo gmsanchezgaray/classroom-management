@@ -3,7 +3,7 @@
   <form
     class="requires-validation"
     [formGroup]="formUser"
-    (ngSubmit)="handleSubmitUser()"
+    (ngSubmit)="handleSubmitUser($event)"
   >
     <div class="col-md-12">
       <input

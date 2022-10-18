@@ -13,6 +13,7 @@ import { CoursesComponent } from './courses/courses.component';
 import { PagesComponent } from './pages.component';
 import { DirectivesModule } from '../directives/directives.module';
 import { DialogUserComponent } from './users/dialog-user/dialog-user.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
