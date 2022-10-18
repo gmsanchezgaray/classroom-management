@@ -1,0 +1,47 @@
+.spinner-container {
+  width: 100%;
+  height: 50vh;
+  overflow: hidden;
+  position: relative;
+  z-index: 999;
+}
+
+#circle-spinner {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 50px;
+  width: 50px;
+  margin: -25px 0 0 -25px;
+  border: 4px rgba(0, 0, 0, 0.25) solid;
+  border-top: 4px black solid;
+  border-radius: 50%;
+  -webkit-animation: spinframe 1s infinite linear;
+  animation: spinframe 1s infinite linear;
+}
+
+@-webkit-keyframes spinframe {
+  from {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+  to {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+}
+@keyframes spinframe {
+  from {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+  to {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+}

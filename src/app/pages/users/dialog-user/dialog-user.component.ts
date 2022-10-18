@@ -52,7 +52,8 @@ export class DialogUserComponent implements OnInit {
       ? (this.labelDiaog = 'Edit user')
       : (this.labelDiaog = 'Add user');
   }
-  handleSubmitUser() {
+  handleSubmitUser(event: Event) {
+    event.preventDefault();
     if (this.formUser.invalid) {
       this.formUser.markAllAsTouched();
       this._snackBar.open('Complete the required fields', '  ', {
