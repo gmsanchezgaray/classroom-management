@@ -1,1 +1,70 @@
-<p>commissions-list works!</p>
+<div class="container mt-3">
+  <p headerFont>Commissions lists</p>
+  <div class="d-flex justify-content-end">
+    <button (click)="addCommission()" mat-flat-button color="primary">
+      <mat-icon class="mx-1">add</mat-icon> Add Commission
+    </button>
+  </div>
+  <div *ngIf="(commissions$ | async) !== null" class="table-responsive">
+    <table mat-table [dataSource]="commissions$" class="table table-striped">
+      <ng-container matColumnDef="student id">
+        <th mat-header-cell *matHeaderCellDef>Student id</th>
+        <td mat-cell *matCellDef="let commission" class="pt-2">
+          {{ commission.student_id }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="enrolled course id">
+        <th mat-header-cell *matHeaderCellDef>enrolled course id</th>
+        <td mat-cell *matCellDef="let commission" class="pt-2">
+          {{ commission.enrolled_course_id }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="enrollment date">
+        <th mat-header-cell *matHeaderCellDef>enrollment date</th>
+        <td mat-cell *matCellDef="let commission" class="pt-2">
+          {{ commission.enrollment_date }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="registration manager id">
+        <th mat-header-cell *matHeaderCellDef>registration manager id</th>
+        <td mat-cell *matCellDef="let commission" class="pt-2">
+          {{ commission.registration_manager }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let commission" class="pt-2">
+          <button
+            (click)="viewCommission(commission.id)"
+            mat-mini-fab
+            class="mx-1 bg-primary text-white"
+          >
+            <mat-icon>remove_red_eye</mat-icon>
+          </button>
+          <button
+            (click)="editCommission(commission.id)"
+            mat-mini-fab
+            color="accent"
+            class="mx-1"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            (click)="deleteCommission(commission.id)"
+            mat-mini-fab
+            color="warn"
+            class="mx-1"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>
+<div *ngIf="(commissions$ | async) === null" class="spinner-container">
+  <div id="circle-spinner"></div>
+</div>

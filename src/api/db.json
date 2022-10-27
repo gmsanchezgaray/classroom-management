@@ -6,7 +6,8 @@
       "name": "Gonzalo Sanchez",
       "address": "Tucuman 459",
       "telephone": "3513287144",
-      "type": "admin"
+      "type": "admin",
+      "id": "3839e78c-61f9-ef7e-0a4da327"
     },
     {
       "email": "hWalch@gmail.com",
@@ -14,7 +15,8 @@
       "name": "Helena Walch",
       "address": "San Luis 2456",
       "telephone": "3513287166",
-      "type": "user"
+      "type": "user",
+      "id": "V7a7e948-1915-3470-f644c1ce"
     }
   ],
   "courses": [
@@ -141,6 +143,36 @@
       "birthdate": "1999-07-01",
       "type": "student",
       "id": "e48cab97-f04a-ef7c-64f47b6a"
+    }
+  ],
+  "commissions": [
+    {
+      "id": "b7eae337-a438-9c25-ac66160c",
+      "student_id": "47c554be-42b1-7cbf-154a8828",
+      "enrolled_course_id": "47010e1e-0aa6-55d4-249378d6",
+      "enrollment_date": "2022-10-11",
+      "registration_manager": "V7a7e948-1915-3470-f644c1ce"
+    },
+    {
+      "id": "6be230c6-db24-b93c-9d57e474",
+      "student_id": "e48cab97-f04a-ef7c-64f47b6a",
+      "enrolled_course_id": "0bcab04c-45da-9b7b-9f3f6d9f",
+      "enrollment_date": "2022-10-01",
+      "registration_manager": "V7a7e948-1915-3470-f644c1ce"
+    },
+    {
+      "id": "f968cadc-f922-4b4b-beb9e915",
+      "student_id": "46ceca4a-227d-01ec-97eac9cc",
+      "enrolled_course_id": "0bcab04c-45da-9b7b-9f3f6d9f",
+      "enrollment_date": "2022-10-10",
+      "registration_manager": "V7a7e948-1915-3470-f644c1ce"
+    },
+    {
+      "id": "b337caeb-eaa0-c007-cf43a5a7",
+      "student_id": "b8a8e948-1915-3471-f644c0ce",
+      "enrolled_course_id": "08796bc7-e717-834e-9ee659d1",
+      "enrollment_date": "2022-10-20",
+      "registration_manager": "V7a7e948-1915-3470-f644c1ce"
     }
   ]
 }
