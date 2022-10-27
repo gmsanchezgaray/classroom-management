@@ -1,53 +1,146 @@
 {
+  "users": [
+    {
+      "email": "gonzaa.sanchezz@gmail.com",
+      "password": "12345678",
+      "name": "Gonzalo Sanchez",
+      "address": "Tucuman 459",
+      "telephone": "3513287144",
+      "type": "admin"
+    },
+    {
+      "email": "hWalch@gmail.com",
+      "password": "12345678",
+      "name": "Helena Walch",
+      "address": "San Luis 2456",
+      "telephone": "3513287166",
+      "type": "user"
+    }
+  ],
   "courses": [
     {
       "id": "b8a8e948-1915-3471-f644c0ce",
       "name": "Angular",
-      "days": ["Lunes", "Martes"],
-      "schedule": "20:30 a 22:30hs",
-      "status": true,
+      "qtys_hours": 2.3,
+      "qtys_classes": 30,
+      "teachers_name": "Brett Kochendorfer",
       "commission": 1666113670591
     },
     {
       "id": "3639e7c8-16f9-ef7e-0a4da372",
       "name": "React",
-      "days": ["Lunes", "Martes"],
-      "schedule": "20:30 a 22:30hs",
-      "status": true,
-      "commission": 1666113670535
+      "qtys_hours": 2,
+      "qtys_classes": 24,
+      "teachers_name": "Jean-Yves Perrier"
     },
     {
       "id": "0bcab04c-45da-9b7b-9f3f6d9f",
       "name": "Angular",
-      "days": ["Martes"],
-      "schedule": "18:30 a 20:30hs",
-      "status": true,
-      "commission": 1666113670553
+      "qtys_hours": 2,
+      "qtys_classes": 32,
+      "teachers_name": "Sasha Sushko"
     },
     {
       "id": "6764a716-e01c-4cda-f3099b45",
       "name": "Vue",
-      "days": ["Lunes", "Martes", "Jueves"],
-      "email": "gonzaa.sanchezz@gmail.com",
-      "schedule": "11:30 a 14:30hs",
-      "status": true,
-      "commission": 1666113670555
+      "qtys_hours": 1.3,
+      "qtys_classes": 28,
+      "teachers_name": "Juan Vásquez"
     },
     {
       "id": "ae3145b6-7ac4-c5b6-a95c8199",
       "name": "Svelte",
-      "days": ["Viernes"],
-      "schedule": "14:30 a 15:30hs",
-      "status": true,
-      "commission": 166611367066
+      "qtys_hours": 2,
+      "qtys_classes": 25,
+      "teachers_name": "Nathália Pissuti"
     },
     {
       "id": "08796bc7-e717-834e-9ee659d1",
       "name": "React",
-      "days": ["Jueves", "Viernes"],
-      "schedule": "16:30 a 18:30hs",
-      "status": true,
-      "commission": 1666113670536
+      "qtys_hours": 2.3,
+      "qtys_classes": 25,
+      "teachers_name": "Pedro Torcatt"
+    },
+    {
+      "id": "47010e1e-0aa6-55d4-249378d6",
+      "name": "Bootstrap",
+      "qtys_hours": 1.3,
+      "qtys_classes": 10,
+      "teachers_name": "Luca Greco"
+    }
+  ],
+  "students": [
+    {
+      "name": "Gonzalo",
+      "surname": "Sanchez",
+      "email": "gonzaa.sanchezz@gmail.com",
+      "gender": "Male",
+      "birthdate": "1994-10-01",
+      "type": "student",
+      "id": "97393df6-89a7-b951-3a606379"
+    },
+    {
+      "name": "Abner",
+      "surname": "Garcia",
+      "email": "agarcia@gmail.com",
+      "gender": "Male",
+      "birthdate": "1987-10-21",
+      "type": "student",
+      "id": "b8a8e948-1915-3471-f644c0ce"
+    },
+    {
+      "name": "Jose",
+      "surname": "Hernandez",
+      "email": "jhernandez@gmail.com",
+      "gender": "Male",
+      "birthdate": "1992-07-23",
+      "type": "student",
+      "id": "3639e7c8-16f9-ef7e-0a4da372"
+    },
+    {
+      "name": "Melina",
+      "surname": "Rosell",
+      "email": "mrosell@gmail.com",
+      "gender": "Female",
+      "birthdate": "1990-04-13",
+      "type": "student",
+      "id": "8eb30fa9-2a5e-465a-b2f41ea4"
+    },
+    {
+      "name": "Leona",
+      "surname": "Hunt",
+      "email": "lhunt@gmail.com",
+      "gender": "Female",
+      "birthdate": "1991-10-16",
+      "type": "student",
+      "id": "4c98aff2-72f2-a178-6a542cac"
+    },
+    {
+      "name": "Laura",
+      "surname": "Lynn",
+      "email": "llynn@gmail.com",
+      "gender": "Female",
+      "birthdate": "1949-09-03",
+      "type": "student",
+      "id": "46ceca4a-227d-01ec-97eac9cc"
+    },
+    {
+      "name": "Carlos",
+      "surname": "Villarreal",
+      "email": "cvillarreal@gmail.com",
+      "gender": "Male",
+      "birthdate": "1978-03-29",
+      "type": "student",
+      "id": "47c554be-42b1-7cbf-154a8828"
+    },
+    {
+      "name": "Zachary",
+      "surname": "Gomez",
+      "email": "zgomez@gmail.com",
+      "gender": "Other",
+      "birthdate": "1999-07-01",
+      "type": "student",
+      "id": "e48cab97-f04a-ef7c-64f47b6a"
     }
   ]
 }

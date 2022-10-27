@@ -7,22 +7,43 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
   >
-    <mat-toolbar class="px-4">Menu</mat-toolbar>
+    <mat-toolbar class="px-4">
+      <img
+        src="../../../../assets/images/logo.svg"
+        alt="Logo imagen"
+        width="40px"
+        height="40px"
+      />
+    </mat-toolbar>
     <mat-nav-list class="px-2">
       <button
         mat-list-item
-        routerLink="/users"
+        routerLink="/"
         routerLinkActive="router-link-active"
       >
-        Users
+        Dashboard
       </button>
-      <a
+      <button
+        mat-list-item
+        routerLink="/students"
+        routerLinkActive="router-link-active"
+      >
+        Students
+      </button>
+      <button
         mat-list-item
         routerLink="/courses"
         routerLinkActive="router-link-active"
       >
         Courses
-      </a>
+      </button>
+      <button
+        mat-list-item
+        routerLink="/commissions"
+        routerLinkActive="router-link-active"
+      >
+        Commission
+      </button>
     </mat-nav-list>
   </mat-sidenav>
 
