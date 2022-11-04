@@ -5,6 +5,7 @@ import { Student } from '../../interfaces/students';
 import { StudentsService } from '../../services/students.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-students-list',
@@ -24,8 +25,7 @@ export class StudentsListComponent implements OnInit {
   students$: Observable<Student[]>;
   constructor(
     private studentsService: StudentsService,
-    private utilsService: UtilsService,
-    private _snackBar: MatSnackBar
+    private router: Router
   ) {
     this.students$ = this.studentsService.students$;
   }
@@ -35,12 +35,16 @@ export class StudentsListComponent implements OnInit {
     console.log(index);
   }
   viewStudent(index: string) {
-    console.log(index);
+    this.router.navigateByUrl(`/students/view/${index}`, {
+      skipLocationChange: true,
+    });
   }
   editStudent(index: string) {
-    console.log(index);
+    this.router.navigateByUrl(`/students/edit/${index}`, {
+      skipLocationChange: true,
+    });
   }
   addStudent() {
-    console.log('first');
+    this.router.navigateByUrl('/students/new');
   }
 }

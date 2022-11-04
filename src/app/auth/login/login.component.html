@@ -1,0 +1,75 @@
+<section class="h-100">
+  <div class="container h-100">
+    <div class="row align-items-center justify-content-md-center h-100">
+      <div class="card-wrapper col-md-6">
+        <div class="card">
+          <div class="card-header">Login</div>
+          <div class="card-body">
+            <form
+              [formGroup]="loginForm"
+              (ngSubmit)="loginUser()"
+              class="my-login-validation"
+            >
+              <div class="form-group">
+                <label for="email">E-Mail Address</label>
+                <input
+                  class="form-control"
+                  [ngClass]="
+                    loginForm.get('email')?.touched &&
+                    loginForm.get('email')?.invalid
+                      ? 'is-invalid'
+                      : ''
+                  "
+                  type="text"
+                  name="email"
+                  formControlName="email"
+                />
+                <small
+                  *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']"
+                  class="text-danger"
+                >
+                  Email field cannot be blank!
+                </small>
+              </div>
+
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  class="form-control"
+                  [ngClass]="
+                    loginForm.get('password')?.touched &&
+                    loginForm.get('password')?.invalid
+                      ? 'is-invalid'
+                      : ''
+                  "
+                  type="text"
+                  name="password"
+                  formControlName="password"
+                />
+                <small
+                  *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']"
+                  class="text-danger"
+                >
+                  Password field cannot be blank!
+                </small>
+              </div>
+              <div class="form-group my-3">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block w-100"
+                  [style]="loading ? 'padding: 14px 0px' : ''"
+                >
+                  {{ !loading ? "Login" : "" }}
+                  <div *ngIf="loading" class="dot-pulse"></div>
+                </button>
+              </div>
+              <div class="mt-4 text-center">
+                Don't have an account? <a href="register.html">Create One</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

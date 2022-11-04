@@ -5,5 +5,5 @@ export interface Student {
   email: string;
   gender: string;
   birthdate: Date;
-  admin: boolean;
+  type: string;
 }

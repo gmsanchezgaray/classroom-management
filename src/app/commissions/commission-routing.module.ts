@@ -6,7 +6,7 @@ import { NewCommissionComponent } from './components/new-commission/new-commissi
 
 const routes: Routes = [
   {
-    path: 'commissions',
+    path: '',
     component: CommissionsComponent,
     children: [
       { path: '', component: CommissionsListComponent },
@@ -19,7 +19,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [],
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class CommissionRoutingModule {}

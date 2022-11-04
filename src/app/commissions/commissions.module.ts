@@ -8,6 +8,7 @@ import { CommissionsListComponent } from './components/commissions-list/commissi
 import { NewCommissionComponent } from './components/new-commission/new-commission.component';
 import { MaterialModule } from '../material/material.module';
 import { DirectivesModule } from '../directives/directives.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { DirectivesModule } from '../directives/directives.module';
     CommonModule,
     CommissionRoutingModule,
     MaterialModule,
+    SharedModule,
     DirectivesModule,
   ],
   providers: [CommissionsService],

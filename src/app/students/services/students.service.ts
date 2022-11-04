@@ -18,10 +18,10 @@ export class StudentsService {
     return this.http.get<Student[]>(url);
   }
 
-  AddStudent(course: Student) {
+  AddStudent(student: Student) {
     const url = 'api/students';
     return new Promise((resolve, reject) => {
-      this.http.post<Student>(url, course).subscribe(
+      this.http.post<Student>(url, student).subscribe(
         (resp) => {
           resolve(resp);
           this.GetAllStudents();
@@ -33,5 +33,9 @@ export class StudentsService {
         }
       );
     });
+  }
+  GetStudentById(id: string): Observable<Student> {
+    const url = `api/students/${id}`;
+    return this.http.get<Student>(url);
   }
 }

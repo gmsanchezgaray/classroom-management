@@ -7,7 +7,7 @@ import { NewStudentComponent } from './components/new-student/new-student.compon
 
 const routes: Routes = [
   {
-    path: 'students',
+    path: '',
     component: StudentsComponent,
     children: [
       { path: '', component: StudentsListComponent },
@@ -22,7 +22,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class StudentsRoutingModule {}

@@ -11,6 +11,8 @@ import { StudentsListComponent } from './components/students-list/students-list.
 import { MaterialModule } from '../material/material.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { DirectivesModule } from '../directives/directives.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [StudentsComponent, NewStudentComponent, StudentsListComponent],
@@ -19,7 +21,10 @@ import { DirectivesModule } from '../directives/directives.module';
     StudentsRoutingModule,
     MaterialModule,
     PipesModule,
+    SharedModule,
     DirectivesModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [StudentsService],
 })

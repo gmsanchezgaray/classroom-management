@@ -1,1 +1,247 @@
-<p>new-student works!</p>
+<div class="form-body mt-4">
+  <button class="btn btn-outline-primary mx-5" (click)="back()">Back</button>
+  <div class="row container">
+    <div class="form-holder">
+      <div class="form-content">
+        <div class="form-items">
+          <form
+            class="requires-validation"
+            [formGroup]="studentForm"
+            (ngSubmit)="onSubmit()"
+          >
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                [ngClass]="studentForm.get('name')?.valid ? ' is-valid' : ''"
+                [ngClass]="
+                  studentForm.get('name')?.touched &&
+                  studentForm.get('name')?.invalid
+                    ? 'is-invalid'
+                    : ''
+                "
+                type="text"
+                name="name"
+                placeholder="Name"
+                formControlName="name"
+              />
+              <div
+                *ngIf="
+                  studentForm.get('name')?.touched &&
+                  studentForm.get('name')?.valid
+                "
+                class="text-success"
+              >
+                First name field is valid!
+              </div>
+
+              <small
+                *ngIf="studentForm.get('name')?.touched && studentForm.get('name')?.errors?.['required']"
+                class="text-danger"
+              >
+                First name field cannot be blank!
+              </small>
+            </div>
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                [ngClass]="studentForm.get('surname')?.valid ? ' is-valid' : ''"
+                [ngClass]="
+                  studentForm.get('surname')?.touched &&
+                  studentForm.get('surname')?.invalid
+                    ? 'is-invalid'
+                    : ''
+                "
+                type="text"
+                name="surname"
+                placeholder="Last name"
+                formControlName="surname"
+              />
+              <div
+                *ngIf="
+                  studentForm.get('surname')?.touched &&
+                  studentForm.get('surname')?.valid
+                "
+                class="text-success"
+              >
+                Last name field is valid!
+              </div>
+
+              <small
+                *ngIf="studentForm.get('surname')?.touched && studentForm.get('surname')?.errors?.['required']"
+                class="text-danger"
+              >
+                Last name field cannot be blank!
+              </small>
+            </div>
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                [ngClass]="
+                  studentForm.get('email')?.touched &&
+                  studentForm.get('email')?.valid
+                    ? 'form-control is-valid'
+                    : ''
+                "
+                [ngClass]="
+                  studentForm.get('email')?.touched &&
+                  studentForm.get('email')?.invalid
+                    ? 'is-invalid'
+                    : ''
+                "
+                type="email"
+                name="email"
+                placeholder="E-mail Address"
+                formControlName="email"
+              />
+              <small
+                *ngIf="
+                  studentForm.get('email')?.touched &&
+                  studentForm.get('email')?.valid
+                "
+                class="text-success"
+              >
+                Email field is valid!
+              </small>
+              <small
+                *ngIf="studentForm.get('email')?.touched && studentForm.get('email')?.errors?.['required']"
+                class="text-danger"
+              >
+                Email field cannot be blank!
+              </small>
+            </div>
+
+            <div class="col-md-12 mt-3">
+              <label class="mb-3 mr-3" for="gender">Gender: </label>
+
+              <input
+                type="radio"
+                class="btn-check"
+                name="gender"
+                formControlName="gender"
+                value="male"
+                id="male"
+              />
+              <label class="btn btn-sm btn-outline-primary" for="male"
+                >Male</label
+              >
+
+              <input
+                type="radio"
+                class="btn-check"
+                name="gender"
+                formControlName="gender"
+                value="female"
+                id="female"
+                autocomplete="off"
+              />
+              <label class="btn btn-sm btn-outline-primary" for="female"
+                >Female</label
+              >
+
+              <input
+                type="radio"
+                class="btn-check"
+                name="gender"
+                formControlName="gender"
+                value="other"
+                id="other"
+                autocomplete="off"
+              />
+              <label class="btn btn-sm btn-outline-primary" for="other"
+                >Other</label
+              >
+              <small
+                *ngIf="
+                  studentForm.get('gender')?.touched &&
+                  studentForm.get('gender')?.valid
+                "
+                class="text-success mv-up"
+                >You selected a gender!</small
+              >
+              <small
+                *ngIf="studentForm.get('gender')?.touched && studentForm.get('gender')?.errors?.['required']"
+                class="text-danger mv-up"
+                >Please select a gender!</small
+              >
+            </div>
+
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                [ngClass]="
+                  studentForm.get('birthdate')?.valid ? 'is-valid' : ''
+                "
+                [ngClass]="
+                  studentForm.get('birthdate')?.touched &&
+                  studentForm.get('birthdate')?.invalid
+                    ? 'is-invalid'
+                    : ''
+                "
+                type="date"
+                name="birthdate"
+                placeholder="dd/mm/Yyyy"
+                formControlName="birthdate"
+              />
+              <small
+                *ngIf="
+                  studentForm.get('birthdate')?.touched &&
+                  studentForm.get('birthdate')?.valid
+                "
+                class="text-success"
+                >Birthdate field is valid!</small
+              >
+              <small
+                *ngIf="studentForm.get('birthdate')?.touched && studentForm.get('birthdate')?.errors?.['required']"
+                class="text-danger"
+              >
+                Birthdate field cannot be blank!
+              </small>
+            </div>
+
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                [ngClass]="studentForm.get('type')?.valid ? 'is-valid' : ''"
+                [ngClass]="
+                  studentForm.get('type')?.touched &&
+                  studentForm.get('type')?.invalid
+                    ? 'is-invalid'
+                    : ''
+                "
+                type="type"
+                name="type"
+                placeholder="Profile type"
+                formControlName="type"
+              />
+              <small
+                *ngIf="
+                  studentForm.get('type')?.touched &&
+                  studentForm.get('type')?.valid
+                "
+                class="text-success"
+                >type field is valid!</small
+              >
+              <small
+                *ngIf="studentForm.get('type')?.touched && studentForm.get('type')?.errors?.['required']"
+                class="text-danger"
+              >
+                Type field cannot be blank!
+              </small>
+            </div>
+
+            <div class="form-button mt-3">
+              <button
+                [disabled]="buttonDisable || studentForm.invalid"
+                id="submit"
+                type="submit"
+                class="btn btn-primary w-100"
+              >
+                <i class="fa fa-user-plus mx-2"></i>Add user
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

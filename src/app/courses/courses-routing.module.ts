@@ -6,7 +6,7 @@ import { NewCourseComponent } from './components/new-course/new-course.component
 
 const routes: Routes = [
   {
-    path: 'courses',
+    path: '',
     component: CoursesComponent,
     children: [
       { path: '', component: CoursesListComponent },
@@ -21,7 +21,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class CoursesRoutingModule {}

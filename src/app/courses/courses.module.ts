@@ -9,6 +9,7 @@ import { CoursesComponent } from './components/courses/courses.component';
 import { NewCourseComponent } from './components/new-course/new-course.component';
 import { MaterialModule } from '../material/material.module';
 import { DirectivesModule } from '../directives/directives.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [CoursesComponent, NewCourseComponent, CoursesListComponent],
@@ -16,6 +17,7 @@ import { DirectivesModule } from '../directives/directives.module';
     CommonModule,
     CoursesRoutingModule,
     MaterialModule,
+    SharedModule,
     DirectivesModule,
   ],
   providers: [CoursesService],
