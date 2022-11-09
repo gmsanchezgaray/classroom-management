@@ -34,4 +34,9 @@ export class CoursesService {
       );
     });
   }
+
+  GetCourseById(id: string): Observable<Course> {
+    const url = `api/courses/${id}`;
+    return this.http.get<Course>(url);
+  }
 }

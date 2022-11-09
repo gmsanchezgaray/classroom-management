@@ -10,6 +10,7 @@ import { NewCourseComponent } from './components/new-course/new-course.component
 import { MaterialModule } from '../material/material.module';
 import { DirectivesModule } from '../directives/directives.module';
 import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [CoursesComponent, NewCourseComponent, CoursesListComponent],
@@ -18,6 +19,7 @@ import { SharedModule } from '../shared/shared.module';
     CoursesRoutingModule,
     MaterialModule,
     SharedModule,
+    ReactiveFormsModule,
     DirectivesModule,
   ],
   providers: [CoursesService],

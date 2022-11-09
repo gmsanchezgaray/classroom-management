@@ -37,30 +37,23 @@ export class NewStudentComponent implements OnInit {
   }
   loadView() {
     if (this.router.url.includes('edit')) {
-      // this.activatedRoute.params
-      //   .pipe(switchMap(({ id }) => this.topicsService.GetTopicsById(id)))
-      //   .subscribe(
-      //     (Tema) => (
-      //       this.studentForm.patchValue(Tema),
-      //       (this.tittle = 'Editar'),
-      //       (this.textButton = 'Editar'),
-      //       this.studentForm.controls['inicioVigencia'].setValue(
-      //         this.datePipe.transform(Tema.inicioVigencia, 'yyyy-MM-dd'),
-      //       ),
-      //       this.studentForm.controls['finVigencia'].setValue(
-      //         this.datePipe.transform(Tema.finVigencia, 'yyyy-MM-dd'),
-      //       ),
-      //       (this._idTopic = Tema.idTema)
-      //     ),
-      //   );
-      // this.cargando = false;
-      // return;
+      this.activatedRoute.params
+        .pipe(switchMap(({ id }) => this.studentsService.GetStudentById(id)))
+        .subscribe(
+          (Tema) => (
+            this.studentForm.patchValue(Tema),
+            (this.tittle = 'Edit'),
+            (this.textButton = 'Edit')
+          )
+        );
+      return;
     }
 
     if (this.router.url.includes('view')) {
       this.activatedRoute.params
         .pipe(switchMap(({ id }) => this.studentsService.GetStudentById(id)))
         .subscribe((student) => {
+          console.log(student)
           this.studentForm.patchValue(student),
             (this.tittle = 'Consult'),
             this.studentForm.disable(),
@@ -86,8 +79,8 @@ export class NewStudentComponent implements OnInit {
       return;
     }
     if (this.router.url.includes('new')) {
-      this.tittle = 'Nuevo';
-      this.textButton = 'Guardar';
+      this.tittle = 'New';
+      this.textButton = 'Save';
       return;
     }
   }

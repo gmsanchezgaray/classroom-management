@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { NewCourseComponent } from './new-course.component';
 
@@ -8,9 +11,14 @@ describe('NewCourseComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NewCourseComponent ]
-    })
-    .compileComponents();
+      declarations: [NewCourseComponent],
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

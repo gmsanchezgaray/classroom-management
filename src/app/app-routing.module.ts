@@ -30,6 +30,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full',
+  },
+  {
     path: '**',
     component: NotPageFoundComponent,
   },

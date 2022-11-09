@@ -1,1 +1,164 @@
-<p>new-course works!</p>
+<div class="form-body mt-4">
+  <button class="btn btn-outline-primary mx-5" (click)="back()">Back</button>
+  <div class="row container">
+    <div class="form-holder">
+      <div class="form-content">
+        <div class="form-items">
+          <p headerFont>{{ tittle }} course</p>
+          <form
+            class="requires-validation"
+            [formGroup]="courseForm"
+            (ngSubmit)="onSubmit()"
+          >
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                [ngClass]="courseForm.get('name')?.valid ? ' is-valid' : ''"
+                [ngClass]="
+                  courseForm.get('name')?.touched &&
+                  courseForm.get('name')?.invalid
+                    ? 'is-invalid'
+                    : ''
+                "
+                type="text"
+                name="name"
+                placeholder="Name"
+                formControlName="name"
+              />
+              <div
+                *ngIf="
+                  courseForm.get('name')?.touched &&
+                  courseForm.get('name')?.valid
+                "
+                class="text-success"
+              >
+                First name field is valid!
+              </div>
+
+              <small
+                *ngIf="courseForm.get('name')?.touched && courseForm.get('name')?.errors?.['required']"
+                class="text-danger"
+              >
+                First name field cannot be blank!
+              </small>
+            </div>
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                [ngClass]="
+                  courseForm.get('qtys_classes')?.valid ? ' is-valid' : ''
+                "
+                [ngClass]="
+                  courseForm.get('qtys_classes')?.touched &&
+                  courseForm.get('qtys_classes')?.invalid
+                    ? 'is-invalid'
+                    : ''
+                "
+                type="text"
+                name="qtys_classes"
+                placeholder="Quantity of classes"
+                formControlName="qtys_classes"
+              />
+              <div
+                *ngIf="
+                  courseForm.get('qtys_classes')?.touched &&
+                  courseForm.get('qtys_classes')?.valid
+                "
+                class="text-success"
+              >
+                Quantity of classes field is valid!
+              </div>
+
+              <small
+                *ngIf="courseForm.get('qtys_classes')?.touched && courseForm.get('qtys_classes')?.errors?.['required']"
+                class="text-danger"
+              >
+                Quantity of classes field cannot be blank!
+              </small>
+            </div>
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                [ngClass]="
+                  courseForm.get('qtys_hours')?.touched &&
+                  courseForm.get('qtys_hours')?.valid
+                    ? 'form-control is-valid'
+                    : ''
+                "
+                [ngClass]="
+                  courseForm.get('qtys_hours')?.touched &&
+                  courseForm.get('qtys_hours')?.invalid
+                    ? 'is-invalid'
+                    : ''
+                "
+                type="text"
+                name="qtys_hours"
+                placeholder="Quantity of hours"
+                formControlName="qtys_hours"
+              />
+              <small
+                *ngIf="
+                  courseForm.get('qtys_hours')?.touched &&
+                  courseForm.get('qtys_hours')?.valid
+                "
+                class="text-success"
+              >
+                Quantity of hours field is valid!
+              </small>
+              <small
+                *ngIf="courseForm.get('qtys_hours')?.touched && courseForm.get('qtys_hours')?.errors?.['required']"
+                class="text-danger"
+              >
+                Quantity of hours field cannot be blank!
+              </small>
+            </div>
+
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                [ngClass]="
+                  courseForm.get('teachers_name')?.valid ? 'is-valid' : ''
+                "
+                [ngClass]="
+                  courseForm.get('teachers_name')?.touched &&
+                  courseForm.get('teachers_name')?.invalid
+                    ? 'is-invalid'
+                    : ''
+                "
+                type="text"
+                name="teachers_name"
+                placeholder="Teacher's name"
+                formControlName="teachers_name"
+              />
+              <small
+                *ngIf="
+                  courseForm.get('teachers_name')?.touched &&
+                  courseForm.get('teachers_name')?.valid
+                "
+                class="text-success"
+                >Teacher's name field is valid!</small
+              >
+              <small
+                *ngIf="courseForm.get('teachers_name')?.touched && courseForm.get('teachers_name')?.errors?.['required']"
+                class="text-danger"
+              >
+                Teacher's name cannot be blank!
+              </small>
+            </div>
+
+            <div class="form-button mt-3" *ngIf="tittle !== 'Consult'">
+              <button
+                [disabled]="buttonDisable || courseForm.invalid"
+                id="submit"
+                type="submit"
+                class="btn btn-primary w-100"
+              >
+                <i class="fa fa-user-plus mx-2"></i>{{ textButton }} course
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

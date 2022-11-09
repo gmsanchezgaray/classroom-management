@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UtilsService } from 'src/app/services/utils.service';
 import { Course } from '../../interfaces/course';
 import { CoursesService } from '../../services/courses.service';
 
@@ -19,13 +18,8 @@ export class CoursesListComponent implements OnInit {
     'actions',
   ];
   courses$: Observable<Course[]>;
-  constructor(
-    private coursesService: CoursesService,
-    private utilsService: UtilsService,
-    private _snackBar: MatSnackBar
-  ) {
+  constructor(private coursesService: CoursesService, private router: Router) {
     this.courses$ = this.coursesService.courses$;
-    console.log(this.coursesService.courses$);
   }
 
   ngOnInit(): void {}
@@ -67,12 +61,16 @@ export class CoursesListComponent implements OnInit {
     console.log(index);
   }
   viewCourse(index: string) {
-    console.log(index);
+    this.router.navigateByUrl(`/courses/view/${index}`, {
+      skipLocationChange: true,
+    });
   }
   editCourse(index: string) {
-    console.log(index);
+    this.router.navigateByUrl(`/courses/edit/${index}`, {
+      skipLocationChange: true,
+    });
   }
   addCourse() {
-    console.log('first');
+    this.router.navigateByUrl('/courses/new');
   }
 }

@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { CommissionsListComponent } from './commissions-list.component';
 
@@ -8,9 +11,14 @@ describe('CommissionsListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CommissionsListComponent ]
-    })
-    .compileComponents();
+      declarations: [CommissionsListComponent],
+      imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

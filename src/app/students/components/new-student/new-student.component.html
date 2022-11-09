@@ -4,6 +4,7 @@
     <div class="form-holder">
       <div class="form-content">
         <div class="form-items">
+          <p headerFont>{{ tittle }} student</p>
           <form
             class="requires-validation"
             [formGroup]="studentForm"
@@ -118,10 +119,10 @@
                 class="btn-check"
                 name="gender"
                 formControlName="gender"
-                value="male"
-                id="male"
+                value="Male"
+                id="Male"
               />
-              <label class="btn btn-sm btn-outline-primary" for="male"
+              <label class="btn btn-sm btn-outline-primary" for="Male"
                 >Male</label
               >
 
@@ -130,11 +131,11 @@
                 class="btn-check"
                 name="gender"
                 formControlName="gender"
-                value="female"
-                id="female"
+                value="Female"
+                id="Female"
                 autocomplete="off"
               />
-              <label class="btn btn-sm btn-outline-primary" for="female"
+              <label class="btn btn-sm btn-outline-primary" for="Female"
                 >Female</label
               >
 
@@ -143,11 +144,11 @@
                 class="btn-check"
                 name="gender"
                 formControlName="gender"
-                value="other"
-                id="other"
+                value="Other"
+                id="Other"
                 autocomplete="off"
               />
-              <label class="btn btn-sm btn-outline-primary" for="other"
+              <label class="btn btn-sm btn-outline-primary" for="Other"
                 >Other</label
               >
               <small
@@ -229,14 +230,14 @@
               </small>
             </div>
 
-            <div class="form-button mt-3">
+            <div class="form-button mt-3" *ngIf="tittle !== 'Consult'">
               <button
                 [disabled]="buttonDisable || studentForm.invalid"
                 id="submit"
                 type="submit"
                 class="btn btn-primary w-100"
               >
-                <i class="fa fa-user-plus mx-2"></i>Add user
+                <i class="fa fa-user-plus mx-2"></i>{{ textButton }} user
               </button>
             </div>
           </form>

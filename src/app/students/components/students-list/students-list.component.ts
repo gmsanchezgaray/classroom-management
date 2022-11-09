@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { Student } from '../../interfaces/students';
 import { StudentsService } from '../../services/students.service';
-import { UtilsService } from 'src/app/services/utils.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
 @Component({

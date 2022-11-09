@@ -13,10 +13,12 @@ import { PipesModule } from '../pipes/pipes.module';
 import { DirectivesModule } from '../directives/directives.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [StudentsComponent, NewStudentComponent, StudentsListComponent],
   imports: [
+    HttpClientModule,
     CommonModule,
     StudentsRoutingModule,
     MaterialModule,
