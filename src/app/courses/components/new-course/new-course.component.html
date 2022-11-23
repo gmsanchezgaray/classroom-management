@@ -114,8 +114,8 @@
             </div>
 
             <div class="col-md-12">
-              <input
-                class="form-control"
+              <select
+                class="form-select"
                 [ngClass]="
                   courseForm.get('teachers_name')?.valid ? 'is-valid' : ''
                 "
@@ -125,11 +125,18 @@
                     ? 'is-invalid'
                     : ''
                 "
-                type="text"
                 name="teachers_name"
                 placeholder="Teacher's name"
                 formControlName="teachers_name"
-              />
+              >
+                <option selected disabled>Teacher's name</option>
+                <option
+                  *ngFor="let teacher of teachers$"
+                  value="{{ transformValueName(teacher.id) }}"
+                >
+                  {{ transformValueName(teacher.id) }}
+                </option>
+              </select>
               <small
                 *ngIf="
                   courseForm.get('teachers_name')?.touched &&

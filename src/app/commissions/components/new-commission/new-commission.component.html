@@ -1,1 +1,131 @@
-<p>new-commission works!</p>
+<div class="form-body mt-4">
+  <button class="btn btn-outline-primary mx-5" (click)="back()">Back</button>
+  <div class="row container">
+    <div class="form-holder">
+      <div class="form-content">
+        <div class="form-items">
+          <p headerFont>{{ tittle }} commission</p>
+          <form
+            class="requires-validation"
+            [formGroup]="commissionForm"
+            (ngSubmit)="onSubmit()"
+          >
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                [ngClass]="
+                  commissionForm.get('student_id')?.valid ? ' is-valid' : ''
+                "
+                [ngClass]="
+                  commissionForm.get('student_id')?.touched &&
+                  commissionForm.get('student_id')?.invalid
+                    ? 'is-invalid'
+                    : ''
+                "
+                type="text"
+                name="student_id"
+                placeholder="student_id"
+                formControlName="student_id"
+              />
+              <div
+                *ngIf="
+                  commissionForm.get('student_id')?.touched &&
+                  commissionForm.get('student_id')?.valid
+                "
+                class="text-success"
+              >
+                Student field is valid!
+              </div>
+
+              <small
+                *ngIf="commissionForm.get('student_id')?.touched && commissionForm.get('student_id')?.errors?.['required']"
+                class="text-danger"
+              >
+                Student field cannot be blank!
+              </small>
+            </div>
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                [ngClass]="
+                  commissionForm.get('enrolled_course_id')?.valid
+                    ? ' is-valid'
+                    : ''
+                "
+                [ngClass]="
+                  commissionForm.get('enrolled_course_id')?.touched &&
+                  commissionForm.get('enrolled_course_id')?.invalid
+                    ? 'is-invalid'
+                    : ''
+                "
+                type="text"
+                name="enrolled_course_id"
+                placeholder="Enrolled course"
+                formControlName="enrolled_course_id"
+              />
+              <div
+                *ngIf="
+                  commissionForm.get('enrolled_course_id')?.touched &&
+                  commissionForm.get('enrolled_course_id')?.valid
+                "
+                class="text-success"
+              >
+                Enrolled course field is valid!
+              </div>
+
+              <small
+                *ngIf="commissionForm.get('enrolled_course_id')?.touched && commissionForm.get('enrolled_course_id')?.errors?.['required']"
+                class="text-danger"
+              >
+                Enrolled course field cannot be blank!
+              </small>
+            </div>
+            <div class="col-md-12 mt-3">
+              <input
+                class="form-control"
+                [ngClass]="
+                  commissionForm.get('enrollment_date')?.valid ? 'is-valid' : ''
+                "
+                [ngClass]="
+                  commissionForm.get('enrollment_date')?.touched &&
+                  commissionForm.get('enrollment_date')?.invalid
+                    ? 'is-invalid'
+                    : ''
+                "
+                type="date"
+                name="enrollment_date"
+                placeholder="dd/mm/Yyyy"
+                formControlName="enrollment_date"
+              />
+              <small
+                *ngIf="
+                  commissionForm.get('enrollment_date')?.touched &&
+                  commissionForm.get('enrollment_date')?.valid
+                "
+                class="text-success"
+                >Enrollment date field is valid!</small
+              >
+              <small
+                *ngIf="commissionForm.get('enrollment_date')?.touched && commissionForm.get('enrollment_date')?.errors?.['required']"
+                class="text-danger"
+              >
+                Enrollment date field cannot be blank!
+              </small>
+            </div>
+
+            <div class="form-button mt-3" *ngIf="tittle !== 'Consult'">
+              <button
+                [disabled]="buttonDisable || commissionForm.invalid"
+                id="submit"
+                type="submit"
+                class="btn btn-primary w-100"
+              >
+                <i class="fa fa-user-plus mx-2"></i>{{ textButton }} user
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

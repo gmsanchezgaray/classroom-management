@@ -6,4 +6,5 @@ export interface Student {
   gender: string;
   birthdate: Date;
   type: string;
+  isAdmin: boolean;
 }

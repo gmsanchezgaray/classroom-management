@@ -39,4 +39,36 @@ export class CoursesService {
     const url = `api/courses/${id}`;
     return this.http.get<Course>(url);
   }
+
+  UpdateCourse(idCourse: string, object: Course) {
+    const url = `api/courses/${idCourse}`;
+    let data = { ...object, idTema: idCourse };
+
+    return new Promise((resolve, reject) => {
+      this.http.patch<Course>(url, data).subscribe(
+        (resp) => {
+          resolve(resp);
+        },
+        (error) => {
+          reject(error.status);
+        }
+      );
+    });
+  }
+
+  DeleteCourse(id: string) {
+    const url = `api/courses/${id}`;
+    return new Promise((resolve, reject) => {
+      this.http.delete<Course>(url).subscribe(
+        (resp) => {
+          resolve(resp);
+          this.GetAllCourses();
+          this.courses$ = this.GetAllCourses();
+        },
+        (error) => {
+          reject(error.status);
+        }
+      );
+    });
+  }
 }

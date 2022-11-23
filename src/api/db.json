@@ -64,10 +64,10 @@
       "teachers_name": "Pedro Torcatt"
     },
     {
-      "id": "47010e1e-0aa6-55d4-249378d6",
+      "id": "cecee435-f3f9-04de-1cf4424b",
       "name": "Bootstrap",
-      "qtys_hours": 1.3,
-      "qtys_classes": 10,
+      "qtys_classes": "10",
+      "qtys_hours": "1.3",
       "teachers_name": "Luca Greco"
     }
   ],
@@ -79,7 +79,9 @@
       "gender": "Male",
       "birthdate": "1994-10-01",
       "type": "student",
-      "id": "97393df6-89a7-b951-3a606379"
+      "id": "97393df6-89a7-b951-3a606379",
+      "idTema": "97393df6-89a7-b951-3a606379",
+      "isAdmin": true
     },
     {
       "name": "Abner",
@@ -87,8 +89,10 @@
       "email": "agarcia@gmail.com",
       "gender": "Male",
       "birthdate": "1987-10-21",
-      "type": "student",
-      "id": "b8a8e948-1915-3471-f644c0ce"
+      "type": "teacher",
+      "id": "b8a8e948-1915-3471-f644c0ce",
+      "idTema": "b8a8e948-1915-3471-f644c0ce",
+      "isAdmin": false
     },
     {
       "name": "Jose",
@@ -97,16 +101,20 @@
       "gender": "Male",
       "birthdate": "1992-07-23",
       "type": "student",
-      "id": "3639e7c8-16f9-ef7e-0a4da372"
+      "id": "3639e7c8-16f9-ef7e-0a4da372",
+      "idTema": "3639e7c8-16f9-ef7e-0a4da372",
+      "isAdmin": false
     },
     {
       "name": "Melina",
       "surname": "Rosell",
       "email": "mrosell@gmail.com",
-      "gender": "Female",
+      "gender": "Other",
       "birthdate": "1990-04-13",
       "type": "student",
-      "id": "8eb30fa9-2a5e-465a-b2f41ea4"
+      "id": "8eb30fa9-2a5e-465a-b2f41ea4",
+      "idTema": "8eb30fa9-2a5e-465a-b2f41ea4",
+      "isAdmin": false
     },
     {
       "name": "Leona",
@@ -115,7 +123,9 @@
       "gender": "Female",
       "birthdate": "1991-10-16",
       "type": "student",
-      "id": "4c98aff2-72f2-a178-6a542cac"
+      "id": "4c98aff2-72f2-a178-6a542cac",
+      "idTema": "4c98aff2-72f2-a178-6a542cac",
+      "isAdmin": false
     },
     {
       "name": "Laura",
@@ -124,7 +134,9 @@
       "gender": "Female",
       "birthdate": "1949-09-03",
       "type": "student",
-      "id": "46ceca4a-227d-01ec-97eac9cc"
+      "id": "46ceca4a-227d-01ec-97eac9cc",
+      "idTema": "46ceca4a-227d-01ec-97eac9cc",
+      "isAdmin": false
     },
     {
       "name": "Carlos",
@@ -133,7 +145,9 @@
       "gender": "Male",
       "birthdate": "1978-03-29",
       "type": "student",
-      "id": "47c554be-42b1-7cbf-154a8828"
+      "id": "47c554be-42b1-7cbf-154a8828",
+      "idTema": "47c554be-42b1-7cbf-154a8828",
+      "isAdmin": false
     },
     {
       "name": "Zachary",
@@ -142,7 +156,79 @@
       "gender": "Other",
       "birthdate": "1999-07-01",
       "type": "student",
-      "id": "e48cab97-f04a-ef7c-64f47b6a"
+      "id": "e48cab97-f04a-ef7c-64f47b6a",
+      "idTema": "e48cab97-f04a-ef7c-64f47b6a",
+      "isAdmin": false
+    },
+    {
+      "id": "34157895-68a3-28ed-2d5f3c23",
+      "name": "Brett",
+      "surname": "Kochendorfer",
+      "email": "bKochendorfer@gmail.com",
+      "birthdate": "1976-04-01",
+      "gender": "Male",
+      "type": "teacher",
+      "isAdmin": false
+    },
+    {
+      "id": "d4f6f42d-f3b2-6c01-bbe2253f",
+      "name": "Jean-Yves",
+      "surname": "Perrier",
+      "email": "jPerrier@gmail.com",
+      "birthdate": "1994-08-03",
+      "gender": "Other",
+      "type": "teacher",
+      "isAdmin": false
+    },
+    {
+      "id": "dec3f193-e875-a06d-ab8bcbae",
+      "name": "Sasha",
+      "surname": "Sushko",
+      "email": "sSushko@gmail.com",
+      "birthdate": "1993-04-13",
+      "gender": "Female",
+      "type": "teacher",
+      "isAdmin": false
+    },
+    {
+      "id": "03eec99b-9c11-bf9a-18dd7d95",
+      "name": "Juan",
+      "surname": "Vásquez",
+      "email": "jVásquez@gmail.com",
+      "birthdate": "1992-02-08",
+      "gender": "Male",
+      "type": "teacher",
+      "isAdmin": false
+    },
+    {
+      "id": "0b0a0727-1325-e5a9-0abff558",
+      "name": "Nathália",
+      "surname": "Pissuti",
+      "email": "nPissuti@gmail.com",
+      "birthdate": "2000-07-14",
+      "gender": "Female",
+      "type": "teacher",
+      "isAdmin": false
+    },
+    {
+      "id": "6be7bf50-dd2d-e9ca-3fbcc2f6",
+      "name": "Pedro",
+      "surname": "Torcatt",
+      "email": "pTorcatt@gmail.com",
+      "birthdate": "2001-12-26",
+      "gender": "Male",
+      "type": "teacher",
+      "isAdmin": false
+    },
+    {
+      "id": "8a2d3104-dff9-0ea1-9c601291",
+      "name": "Luca",
+      "surname": "Greco",
+      "email": "lGreco@gmail.com",
+      "birthdate": "1995-04-01",
+      "gender": "Other",
+      "type": "teacher",
+      "isAdmin": false
     }
   ],
   "commissions": [

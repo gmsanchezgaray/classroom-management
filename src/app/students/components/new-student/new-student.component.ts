@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { UtilsService } from 'src/app/services/utils.service';
 import { StudentsService } from '../../services/students.service';
 
 @Component({
@@ -14,11 +16,14 @@ export class NewStudentComponent implements OnInit {
   tittle!: string;
   textButton!: string;
   buttonDisable: boolean = false;
+  private _idStudent: string = '';
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private studentsService: StudentsService
+    private studentsService: StudentsService,
+    private _snackbar: MatSnackBar,
+    private utilsService: UtilsService
   ) {}
 
   ngOnInit(): void {
@@ -29,21 +34,25 @@ export class NewStudentComponent implements OnInit {
       birthdate: ['', [Validators.required]],
       gender: ['', Validators.required],
       type: ['', Validators.required],
+      isAdmin: [false],
     });
     this.loadView();
   }
+
   back() {
     this.router.navigateByUrl('/students');
   }
+
   loadView() {
     if (this.router.url.includes('edit')) {
       this.activatedRoute.params
         .pipe(switchMap(({ id }) => this.studentsService.GetStudentById(id)))
         .subscribe(
-          (Tema) => (
-            this.studentForm.patchValue(Tema),
+          (student) => (
+            this.studentForm.patchValue(student),
             (this.tittle = 'Edit'),
-            (this.textButton = 'Edit')
+            (this.textButton = 'Edit'),
+            (this._idStudent = student.id)
           )
         );
       return;
@@ -53,28 +62,11 @@ export class NewStudentComponent implements OnInit {
       this.activatedRoute.params
         .pipe(switchMap(({ id }) => this.studentsService.GetStudentById(id)))
         .subscribe((student) => {
-          console.log(student)
+          console.log(student);
           this.studentForm.patchValue(student),
             (this.tittle = 'Consult'),
             this.studentForm.disable(),
             (this.buttonDisable = true);
-          //   this.studentForm.controls['inicioVigencia'].setValue(
-          //     this.datePipe.transform(Tema.inicioVigencia, 'yyyy-MM-dd'),
-          //   ),
-          //   (this.fechaFinVigencia = this.datePipe.transform(
-          //     Tema.finVigencia,
-          //     'yyyy-MM-dd',
-          //   ));
-          // if (
-          //   this.fechaFinVigencia === null ||
-          //   this.fechaFinVigencia === '0001-01-01'
-          // ) {
-          //   this.studentForm.controls['finVigencia'].reset();
-          // } else {
-          //   this.studentForm.controls['finVigencia'].setValue(
-          //     this.datePipe.transform(Tema.finVigencia, 'yyyy-MM-dd'),
-          //   );
-          // }
         });
       return;
     }
@@ -86,63 +78,61 @@ export class NewStudentComponent implements OnInit {
   }
 
   onSubmit() {
-    // if (this.topicForm.invalid) {
-    //   this.topicForm.markAllAsTouched();
-    //   this.toastR.warning('Debe completar los campos requeridos');
-    //   return;
-    // }
-    // if (this.topicForm.controls['finVigencia'].value === '') {
-    //   this.topicForm.controls['finVigencia'].setValue(null);
-    // }
-    // if (this._idTopic) {
-    //   this.topicsService.UpdateTopics(this._idTopic, this.topicForm.value).then(
-    //     (resp: any) => {
-    //       this.toastR.success('Tema actualizado correctamente', 'Tema', {
-    //         timeOut: 5000,
-    //         closeButton: true,
-    //       });
-    //       this.router.navigateByUrl('topics');
-    //     },
-    //     (err) => {
-    //       this.toastR.error('Ocurrió un error', 'Tema', {
-    //         timeOut: 3000,
-    //         closeButton: true,
-    //       });
-    //     },
-    //   );
-    //   return;
-    // }
-    // this.topicsService
-    //   .CreateTopics(this.topicForm.value)
-    //   .then((resp) => {
-    //     this.toastR.success('Creado correctamente', 'Nuevo Tema', {
-    //       timeOut: 5000,
-    //       closeButton: true,
-    //     });
-    //     this.router.navigateByUrl('topics');
-    //   })
-    //   .catch((err) => {
-    //     if (err === 412) {
-    //       this.toastR.error('Ya existe un tema con ese nombre', 'Nuevo tema', {
-    //         timeOut: 3000,
-    //         closeButton: true,
-    //       });
-    //       return;
-    //     }
-    //     if (err === 500) {
-    //       localStorage.setItem('errorType', '500');
-    //       localStorage.setItem('errorLog', err.message);
-    //       this.router.navigateByUrl('**'),
-    //         {
-    //           skipLocationChange: true,
-    //         };
-    //     } else {
-    //       this.toastR.error('Ocurrió un error', 'Nuevo tema', {
-    //         timeOut: 3000,
-    //         closeButton: true,
-    //       });
-    //       return;
-    //     }
-    //   });
+    if (this.studentForm.invalid) {
+      this.studentForm.markAllAsTouched();
+      this._snackbar.open('You must complete the required fields', '  ', {
+        panelClass: ['snackbar--warning'],
+        verticalPosition: 'top',
+        horizontalPosition: 'end',
+        duration: 3000,
+      });
+      return;
+    }
+
+    if (this._idStudent !== '') {
+      this.studentsService
+        .UpdateStudent(this._idStudent, this.studentForm.value)
+        .then(
+          (resp: any) => {
+            this._snackbar.open('Student updated successfully', '  ', {
+              panelClass: ['snackbar--success'],
+              verticalPosition: 'top',
+              horizontalPosition: 'end',
+              duration: 3000,
+            });
+            this.router.navigateByUrl('students');
+          },
+          (err) => {
+            this._snackbar.open(`Could not update student: ${err}`, '  ', {
+              panelClass: ['snackbar--error'],
+              verticalPosition: 'top',
+              horizontalPosition: 'end',
+              duration: 3000,
+            });
+          }
+        );
+      return;
+    }
+
+    let data = { id: this.utilsService.guid(), ...this.studentForm.value };
+    this.studentsService
+      .AddStudent(data)
+      .then((resp) => {
+        this._snackbar.open('Student created successfully', '  ', {
+          panelClass: ['snackbar--success'],
+          verticalPosition: 'top',
+          horizontalPosition: 'end',
+          duration: 3000,
+        });
+        this.router.navigateByUrl('students');
+      })
+      .catch((err) => {
+        this._snackbar.open(`Could not create student: ${err}`, '  ', {
+          panelClass: ['snackbar--error'],
+          verticalPosition: 'top',
+          horizontalPosition: 'end',
+          duration: 3000,
+        });
+      });
   }
 }

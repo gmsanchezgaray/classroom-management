@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { UtilsService } from 'src/app/services/utils.service';
+import { Student } from 'src/app/students/interfaces/students';
+import { StudentsService } from 'src/app/students/services/students.service';
 import { CoursesService } from '../../services/courses.service';
 
 @Component({
@@ -14,11 +18,16 @@ export class NewCourseComponent implements OnInit {
   tittle!: string;
   textButton!: string;
   buttonDisable: boolean = false;
+  teachers$: Student[] = [];
+  private _idCourse: string = '';
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private studentsService: StudentsService,
+    private _snackbar: MatSnackBar,
+    private utilsService: UtilsService
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +37,15 @@ export class NewCourseComponent implements OnInit {
       qtys_hours: ['', Validators.max(100)],
       teachers_name: ['', [Validators.required]],
     });
+    this.studentsService
+      .GetAllTeachers()
+      .subscribe((teachers: Student[]) => (this.teachers$ = teachers));
     this.loadView();
+  }
+
+  transformValueName(id: string) {
+    let result = this.teachers$.find((element) => element.id === id);
+    return `${result?.name} ${result?.surname}`;
   }
 
   back() {
@@ -40,10 +57,11 @@ export class NewCourseComponent implements OnInit {
       this.activatedRoute.params
         .pipe(switchMap(({ id }) => this.coursesService.GetCourseById(id)))
         .subscribe(
-          (Tema) => (
-            this.courseForm.patchValue(Tema),
+          (course) => (
+            this.courseForm.patchValue(course),
             (this.tittle = 'Edit'),
-            (this.textButton = 'Edit')
+            (this.textButton = 'Edit'),
+            (this._idCourse = course.id)
           )
         );
       return;
@@ -58,23 +76,6 @@ export class NewCourseComponent implements OnInit {
             (this.tittle = 'Consult'),
             this.courseForm.disable(),
             (this.buttonDisable = true);
-          //   this.studentForm.controls['inicioVigencia'].setValue(
-          //     this.datePipe.transform(Tema.inicioVigencia, 'yyyy-MM-dd'),
-          //   ),
-          //   (this.fechaFinVigencia = this.datePipe.transform(
-          //     Tema.finVigencia,
-          //     'yyyy-MM-dd',
-          //   ));
-          // if (
-          //   this.fechaFinVigencia === null ||
-          //   this.fechaFinVigencia === '0001-01-01'
-          // ) {
-          //   this.studentForm.controls['finVigencia'].reset();
-          // } else {
-          //   this.studentForm.controls['finVigencia'].setValue(
-          //     this.datePipe.transform(Tema.finVigencia, 'yyyy-MM-dd'),
-          //   );
-          // }
         });
       return;
     }
@@ -86,63 +87,60 @@ export class NewCourseComponent implements OnInit {
   }
 
   onSubmit() {
-    // if (this.topicForm.invalid) {
-    //   this.topicForm.markAllAsTouched();
-    //   this.toastR.warning('Debe completar los campos requeridos');
-    //   return;
-    // }
-    // if (this.topicForm.controls['finVigencia'].value === '') {
-    //   this.topicForm.controls['finVigencia'].setValue(null);
-    // }
-    // if (this._idTopic) {
-    //   this.topicsService.UpdateTopics(this._idTopic, this.topicForm.value).then(
-    //     (resp: any) => {
-    //       this.toastR.success('Tema actualizado correctamente', 'Tema', {
-    //         timeOut: 5000,
-    //         closeButton: true,
-    //       });
-    //       this.router.navigateByUrl('topics');
-    //     },
-    //     (err) => {
-    //       this.toastR.error('Ocurrió un error', 'Tema', {
-    //         timeOut: 3000,
-    //         closeButton: true,
-    //       });
-    //     },
-    //   );
-    //   return;
-    // }
-    // this.topicsService
-    //   .CreateTopics(this.topicForm.value)
-    //   .then((resp) => {
-    //     this.toastR.success('Creado correctamente', 'Nuevo Tema', {
-    //       timeOut: 5000,
-    //       closeButton: true,
-    //     });
-    //     this.router.navigateByUrl('topics');
-    //   })
-    //   .catch((err) => {
-    //     if (err === 412) {
-    //       this.toastR.error('Ya existe un tema con ese nombre', 'Nuevo tema', {
-    //         timeOut: 3000,
-    //         closeButton: true,
-    //       });
-    //       return;
-    //     }
-    //     if (err === 500) {
-    //       localStorage.setItem('errorType', '500');
-    //       localStorage.setItem('errorLog', err.message);
-    //       this.router.navigateByUrl('**'),
-    //         {
-    //           skipLocationChange: true,
-    //         };
-    //     } else {
-    //       this.toastR.error('Ocurrió un error', 'Nuevo tema', {
-    //         timeOut: 3000,
-    //         closeButton: true,
-    //       });
-    //       return;
-    //     }
-    //   });
+    if (this.courseForm.invalid) {
+      this.courseForm.markAllAsTouched();
+      this._snackbar.open('You must complete the required fields', '  ', {
+        panelClass: ['snackbar--warning'],
+        verticalPosition: 'top',
+        horizontalPosition: 'end',
+        duration: 3000,
+      });
+      return;
+    }
+    if (this._idCourse) {
+      this.coursesService
+        .UpdateCourse(this._idCourse, this.courseForm.value)
+        .then(
+          (resp: any) => {
+            this._snackbar.open('Course updated successfully', '  ', {
+              panelClass: ['snackbar--success'],
+              verticalPosition: 'top',
+              horizontalPosition: 'end',
+              duration: 3000,
+            });
+            this.router.navigateByUrl('courses');
+          },
+          (err) => {
+            this._snackbar.open(`Could not update course: ${err}`, '  ', {
+              panelClass: ['snackbar--error'],
+              verticalPosition: 'top',
+              horizontalPosition: 'end',
+              duration: 3000,
+            });
+          }
+        );
+      return;
+    }
+
+    let data = { id: this.utilsService.guid(), ...this.courseForm.value };
+    this.coursesService
+      .AddCourse(data)
+      .then((resp) => {
+        this._snackbar.open('Course created successfully', '  ', {
+          panelClass: ['snackbar--success'],
+          verticalPosition: 'top',
+          horizontalPosition: 'end',
+          duration: 3000,
+        });
+        this.router.navigateByUrl('courses');
+      })
+      .catch((err) => {
+        this._snackbar.open(`Could not create student: ${err}`, '  ', {
+          panelClass: ['snackbar--error'],
+          verticalPosition: 'top',
+          horizontalPosition: 'end',
+          duration: 3000,
+        });
+      });
   }
 }

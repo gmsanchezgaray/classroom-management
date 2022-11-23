@@ -34,4 +34,9 @@ export class CommissionsService {
       );
     });
   }
+
+  GetCommissionById(id: string): Observable<Commission> {
+    const url = `api/commissions/${id}`;
+    return this.http.get<Commission>(url);
+  }
 }

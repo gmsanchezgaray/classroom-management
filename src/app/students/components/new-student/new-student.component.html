@@ -4,7 +4,7 @@
     <div class="form-holder">
       <div class="form-content">
         <div class="form-items">
-          <p headerFont>{{ tittle }} student</p>
+          <p headerFont>{{ tittle }} user</p>
           <form
             class="requires-validation"
             [formGroup]="studentForm"
@@ -199,31 +199,67 @@
               </small>
             </div>
 
-            <div class="col-md-12">
+            <div class="col-md-12 mt-3">
+              <label class="mb-3 mr-3">Type of user: </label>
               <input
-                class="form-control"
-                [ngClass]="studentForm.get('type')?.valid ? 'is-valid' : ''"
-                [ngClass]="
-                  studentForm.get('type')?.touched &&
-                  studentForm.get('type')?.invalid
-                    ? 'is-invalid'
-                    : ''
-                "
-                type="type"
+                type="radio"
+                class="btn-check"
                 name="type"
-                placeholder="Profile type"
                 formControlName="type"
+                value="student"
+                id="student"
               />
+              <label class="btn btn-sm btn-outline-primary" for="student"
+                >Student</label
+              >
+
+              <input
+                type="radio"
+                class="btn-check"
+                name="type"
+                formControlName="type"
+                value="teacher"
+                id="teacher"
+                autocomplete="off"
+              />
+              <label class="btn btn-sm btn-outline-primary" for="teacher"
+                >Teacher</label
+              >
+
               <small
                 *ngIf="
                   studentForm.get('type')?.touched &&
                   studentForm.get('type')?.valid
                 "
                 class="text-success"
-                >type field is valid!</small
+                >You select a type of user!</small
               >
               <small
                 *ngIf="studentForm.get('type')?.touched && studentForm.get('type')?.errors?.['required']"
+                class="text-danger"
+              >
+                Type field cannot be blank!
+              </small>
+            </div>
+
+            <div class="col-md-12 mt-3">
+              <label class="mb-3 mr-3">Is admin?: </label>
+              <input
+                class="form-check-input"
+                type="checkbox"
+                formControlName="isAdmin"
+              />
+
+              <small
+                *ngIf="
+                  studentForm.get('isAdmin')?.touched &&
+                  studentForm.get('isAdmin')?.valid
+                "
+                class="text-success"
+                >You select a type of user!</small
+              >
+              <small
+                *ngIf="studentForm.get('isAdmin')?.touched && studentForm.get('isAdmin')?.errors?.['required']"
                 class="text-danger"
               >
                 Type field cannot be blank!
