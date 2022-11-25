@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { Course } from 'src/app/courses/interfaces/course';
+import { CoursesService } from 'src/app/courses/services/courses.service';
+import { UtilsService } from 'src/app/services/utils.service';
+import { Student } from 'src/app/students/interfaces/students';
+import { StudentsService } from 'src/app/students/services/students.service';
 import { CommissionsService } from '../../services/commissions.service';
 
 @Component({
@@ -11,35 +17,49 @@ import { CommissionsService } from '../../services/commissions.service';
 })
 export class NewCommissionComponent implements OnInit {
   public commissionForm!: FormGroup;
-  tittle!: string;
-  textButton!: string;
-  buttonDisable: boolean = false;
+  public tittle!: string;
+  public textButton!: string;
+  public buttonDisable: boolean = false;
+  public studentsEnrrolled: string[] = [];
+  public indexSelected: string = '';
+
+  students$: Student[] = [];
+  courses$: Course[] = [];
+  private _idCommission: string = '';
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private commissionsService: CommissionsService
+    private commissionsService: CommissionsService,
+    private coursesService: CoursesService,
+    private studentsServices: StudentsService,
+    private _snackbar: MatSnackBar,
+    private utilsService: UtilsService
   ) {}
 
-  // registration_manager
-  // :
-  // "V7a7e948-1915-3470-f644c1ce"
-  // student_id
-  // :
-  // "47c554be-42b1-7cbf-154a8828"
-
+  //TODO Obtener el valor de la session para poder asignar el registration_manager de la session activa
   ngOnInit(): void {
     this.commissionForm = this.fb.group({
-      registration_manager: ['', [Validators.required, Validators.max(100)]],
-      student_id: ['', [Validators.required, Validators.max(100)]],
+      registration_manager: ['dasdasdasdsd', [Validators.required]],
       enrollment_date: ['', [Validators.required]],
       enrolled_course_id: ['', [Validators.required]],
     });
     this.loadView();
+    this.coursesService
+      .GetAllCourses()
+      .subscribe((courses: Course[]) => (this.courses$ = courses));
+    this.studentsServices
+      .GetAllStudents()
+      .subscribe((students: Student[]) => (this.students$ = students));
   }
 
   back() {
     this.router.navigateByUrl('/commissions');
+  }
+
+  transformValueName(id: string) {
+    let result = this.students$.find((element) => element.id === id);
+    return `${result?.name} ${result?.surname}`;
   }
 
   loadView() {
@@ -51,8 +71,10 @@ export class NewCommissionComponent implements OnInit {
         .subscribe(
           (commission) => (
             this.commissionForm.patchValue(commission),
+            (this.studentsEnrrolled = commission.students_id),
             (this.tittle = 'Edit'),
-            (this.textButton = 'Edit')
+            (this.textButton = 'Edit'),
+            (this._idCommission = commission.id)
           )
         );
       return;
@@ -64,28 +86,11 @@ export class NewCommissionComponent implements OnInit {
           switchMap(({ id }) => this.commissionsService.GetCommissionById(id))
         )
         .subscribe((commission) => {
-          console.log(commission);
           this.commissionForm.patchValue(commission),
+            (this.studentsEnrrolled = commission.students_id),
             (this.tittle = 'Consult'),
             this.commissionForm.disable(),
             (this.buttonDisable = true);
-          //   this.commissionForm.controls['inicioVigencia'].setValue(
-          //     this.datePipe.transform(Tema.inicioVigencia, 'yyyy-MM-dd'),
-          //   ),
-          //   (this.fechaFinVigencia = this.datePipe.transform(
-          //     Tema.finVigencia,
-          //     'yyyy-MM-dd',
-          //   ));
-          // if (
-          //   this.fechaFinVigencia === null ||
-          //   this.fechaFinVigencia === '0001-01-01'
-          // ) {
-          //   this.commissionForm.controls['finVigencia'].reset();
-          // } else {
-          //   this.commissionForm.controls['finVigencia'].setValue(
-          //     this.datePipe.transform(Tema.finVigencia, 'yyyy-MM-dd'),
-          //   );
-          // }
         });
       return;
     }
@@ -97,63 +102,88 @@ export class NewCommissionComponent implements OnInit {
   }
 
   onSubmit() {
-    // if (this.topicForm.invalid) {
-    //   this.topicForm.markAllAsTouched();
-    //   this.toastR.warning('Debe completar los campos requeridos');
-    //   return;
-    // }
-    // if (this.topicForm.controls['finVigencia'].value === '') {
-    //   this.topicForm.controls['finVigencia'].setValue(null);
-    // }
-    // if (this._idTopic) {
-    //   this.topicsService.UpdateTopics(this._idTopic, this.topicForm.value).then(
-    //     (resp: any) => {
-    //       this.toastR.success('Tema actualizado correctamente', 'Tema', {
-    //         timeOut: 5000,
-    //         closeButton: true,
-    //       });
-    //       this.router.navigateByUrl('topics');
-    //     },
-    //     (err) => {
-    //       this.toastR.error('Ocurrió un error', 'Tema', {
-    //         timeOut: 3000,
-    //         closeButton: true,
-    //       });
-    //     },
-    //   );
-    //   return;
-    // }
-    // this.topicsService
-    //   .CreateTopics(this.topicForm.value)
-    //   .then((resp) => {
-    //     this.toastR.success('Creado correctamente', 'Nuevo Tema', {
-    //       timeOut: 5000,
-    //       closeButton: true,
-    //     });
-    //     this.router.navigateByUrl('topics');
-    //   })
-    //   .catch((err) => {
-    //     if (err === 412) {
-    //       this.toastR.error('Ya existe un tema con ese nombre', 'Nuevo tema', {
-    //         timeOut: 3000,
-    //         closeButton: true,
-    //       });
-    //       return;
-    //     }
-    //     if (err === 500) {
-    //       localStorage.setItem('errorType', '500');
-    //       localStorage.setItem('errorLog', err.message);
-    //       this.router.navigateByUrl('**'),
-    //         {
-    //           skipLocationChange: true,
-    //         };
-    //     } else {
-    //       this.toastR.error('Ocurrió un error', 'Nuevo tema', {
-    //         timeOut: 3000,
-    //         closeButton: true,
-    //       });
-    //       return;
-    //     }
-    //   });
+    if (this.commissionForm.invalid) {
+      this.commissionForm.markAllAsTouched();
+      this._snackbar.open('You must complete the required fields', '  ', {
+        panelClass: ['snackbar--warning'],
+        verticalPosition: 'top',
+        horizontalPosition: 'end',
+        duration: 3000,
+      });
+      return;
+    }
+    if (this.studentsEnrrolled.length === 0) {
+      this._snackbar.open('The commission must have students', '  ', {
+        panelClass: ['snackbar--warning'],
+        verticalPosition: 'top',
+        horizontalPosition: 'end',
+        duration: 3000,
+      });
+      return;
+    }
+    if (this._idCommission) {
+      let data = {
+        ...this.commissionForm.value,
+        students_id: this.studentsEnrrolled,
+      };
+      this.commissionsService.UpdateCommission(this._idCommission, data).then(
+        (resp: any) => {
+          this._snackbar.open('Commission updated successfully', '  ', {
+            panelClass: ['snackbar--success'],
+            verticalPosition: 'top',
+            horizontalPosition: 'end',
+            duration: 3000,
+          });
+          this.router.navigateByUrl('commissions');
+        },
+        (err) => {
+          this._snackbar.open(`Could not update commission: ${err}`, '  ', {
+            panelClass: ['snackbar--error'],
+            verticalPosition: 'top',
+            horizontalPosition: 'end',
+            duration: 3000,
+          });
+        }
+      );
+      return;
+    }
+
+    let data = {
+      id: this.utilsService.guid(),
+      ...this.commissionForm.value,
+      students_id: this.studentsEnrrolled,
+    };
+
+    this.commissionsService
+      .AddCommission(data)
+      .then((resp) => {
+        this._snackbar.open('Commission created successfully', '  ', {
+          panelClass: ['snackbar--success'],
+          verticalPosition: 'top',
+          horizontalPosition: 'end',
+          duration: 3000,
+        });
+        this.router.navigateByUrl('commissions');
+      })
+      .catch((err) => {
+        this._snackbar.open(`Could not create commission: ${err}`, '  ', {
+          panelClass: ['snackbar--error'],
+          verticalPosition: 'top',
+          horizontalPosition: 'end',
+          duration: 3000,
+        });
+      });
+  }
+
+  // Actions for students enrrolled
+  deleteStudentEnrrolled(index: string) {
+    let result = this.studentsEnrrolled.filter((element) => element !== index);
+    this.studentsEnrrolled = result;
+  }
+
+  addStudentEnrolled(index: string) {
+    if (!this.studentsEnrrolled.includes(index))
+      this.studentsEnrrolled.push(index);
+    this.indexSelected = '';
   }
 }

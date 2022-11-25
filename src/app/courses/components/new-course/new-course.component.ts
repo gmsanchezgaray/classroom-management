@@ -135,7 +135,7 @@ export class NewCourseComponent implements OnInit {
         this.router.navigateByUrl('courses');
       })
       .catch((err) => {
-        this._snackbar.open(`Could not create student: ${err}`, '  ', {
+        this._snackbar.open(`Could not create course: ${err}`, '  ', {
           panelClass: ['snackbar--error'],
           verticalPosition: 'top',
           horizontalPosition: 'end',

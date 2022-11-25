@@ -9,7 +9,7 @@ import { NewCommissionComponent } from './components/new-commission/new-commissi
 import { MaterialModule } from '../material/material.module';
 import { DirectivesModule } from '../directives/directives.module';
 import { SharedModule } from '../shared/shared.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +24,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     DirectivesModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [CommissionsService],
 })

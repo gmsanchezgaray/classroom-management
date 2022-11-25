@@ -5,28 +5,45 @@
       <div class="form-content">
         <div class="form-items">
           <p headerFont>{{ tittle }} commission</p>
+          <div *ngIf="tittle !== 'Consult'" class="d-flex align-items-center">
+            <select
+              class="form-select mt-0"
+              [ngClass]="
+                commissionForm.get('student_id')?.valid ? 'is-valid' : ''
+              "
+              [ngClass]="
+                commissionForm.get('student_id')?.touched &&
+                commissionForm.get('student_id')?.invalid
+                  ? 'is-invalid'
+                  : ''
+              "
+              name="student_id"
+              placeholder="Student's name"
+              [(ngModel)]="indexSelected"
+            >
+              <option selected disabled>Student's name</option>
+              <option
+                *ngFor="let student of students$"
+                value="{{ student.id }}"
+              >
+                {{ transformValueName(student.id) }}
+              </option>
+            </select>
+            <button
+              mat-mini-fab
+              color="primary"
+              class="mx-2"
+              (click)="addStudentEnrolled(indexSelected)"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
           <form
             class="requires-validation"
             [formGroup]="commissionForm"
             (ngSubmit)="onSubmit()"
           >
             <div class="col-md-12">
-              <input
-                class="form-control"
-                [ngClass]="
-                  commissionForm.get('student_id')?.valid ? ' is-valid' : ''
-                "
-                [ngClass]="
-                  commissionForm.get('student_id')?.touched &&
-                  commissionForm.get('student_id')?.invalid
-                    ? 'is-invalid'
-                    : ''
-                "
-                type="text"
-                name="student_id"
-                placeholder="student_id"
-                formControlName="student_id"
-              />
               <div
                 *ngIf="
                   commissionForm.get('student_id')?.touched &&
@@ -45,11 +62,11 @@
               </small>
             </div>
             <div class="col-md-12">
-              <input
-                class="form-control"
+              <select
+                class="form-select"
                 [ngClass]="
                   commissionForm.get('enrolled_course_id')?.valid
-                    ? ' is-valid'
+                    ? 'is-valid'
                     : ''
                 "
                 [ngClass]="
@@ -58,11 +75,16 @@
                     ? 'is-invalid'
                     : ''
                 "
-                type="text"
                 name="enrolled_course_id"
                 placeholder="Enrolled course"
                 formControlName="enrolled_course_id"
-              />
+              >
+                <option selected disabled>Course's name</option>
+                <option *ngFor="let course of courses$" value="{{ course.id }}">
+                  {{ course.name }}
+                </option>
+              </select>
+
               <div
                 *ngIf="
                   commissionForm.get('enrolled_course_id')?.touched &&
@@ -120,10 +142,45 @@
                 type="submit"
                 class="btn btn-primary w-100"
               >
-                <i class="fa fa-user-plus mx-2"></i>{{ textButton }} user
+                <i class="fa fa-plus mx-2"></i>{{ textButton }} commission
               </button>
             </div>
           </form>
+        </div>
+      </div>
+      <div class="form-content mx-4" *ngIf="studentsEnrrolled.length !== 0">
+        <div class="col-md-12 m-t-20">
+          <div class="card custom-card-shadow">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Fullname</th>
+                    <th *ngIf="tittle !== 'Consult'" class="text-center fit">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let student of studentsEnrrolled">
+                    <td>{{ student }}</td>
+                    <td>{{ transformValueName(student) }}</td>
+                    <td *ngIf="tittle !== 'Consult'" class="text-center fit">
+                      <button
+                        mat-mini-fab
+                        color="warn"
+                        class="mx-2"
+                        (click)="deleteStudentEnrrolled(student)"
+                      >
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>

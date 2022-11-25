@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Course } from 'src/app/courses/interfaces/course';
+import { CoursesService } from 'src/app/courses/services/courses.service';
 import { Commission } from '../../interfaces/commission';
 import { CommissionsService } from '../../services/commissions.service';
 
@@ -11,24 +14,40 @@ import { CommissionsService } from '../../services/commissions.service';
 })
 export class CommissionsListComponent implements OnInit {
   displayedColumns: string[] = [
-    'student id',
+    'students',
     'enrolled course id',
+    'course name',
     'enrollment date',
     'registration manager id',
     'actions',
   ];
 
-  commissions$: Observable<Commission[]>;
+  commissions$!: Observable<Commission[]>;
+  courses$: Course[] = [];
   constructor(
     private commissionsService: CommissionsService,
-    private router: Router
-  ) {
+    private router: Router,
+    private _snackbar: MatSnackBar,
+    private coursesService: CoursesService
+  ) {}
+
+  ngOnInit(): void {
     this.commissions$ = this.commissionsService.commissions$;
+    this.coursesService
+      .GetAllCourses()
+      .subscribe((courses: Course[]) => (this.courses$ = courses));
   }
 
-  ngOnInit(): void {}
   deleteCommission(index: string) {
-    console.log(index);
+    this.commissionsService.DeleteCommission(index).then((resp) => {
+      this._snackbar.open('Commision deleted successfully', '  ', {
+        panelClass: ['snackbar--success'],
+        verticalPosition: 'top',
+        horizontalPosition: 'end',
+        duration: 3000,
+      });
+      this.ngOnInit();
+    });
   }
   viewCommission(index: string) {
     this.router.navigateByUrl(`/commissions/view/${index}`, {
@@ -42,5 +61,10 @@ export class CommissionsListComponent implements OnInit {
   }
   addCommission() {
     this.router.navigateByUrl('/commissions/new');
+  }
+
+  showCourseName(index: string) {
+    let result = this.courses$.find((element) => element.id === index);
+    return result?.name;
   }
 }
