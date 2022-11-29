@@ -12,7 +12,8 @@ import {
   UrlTree,
 } from '@angular/router';
 import { map, Observable } from 'rxjs';
-import { AuthService, Sesion } from '../auth/services/auth.service';
+import { Session } from '../auth/interfaces/session';
+import { AuthService } from '../auth/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +32,7 @@ export class AuthGuard
     | boolean
     | UrlTree {
     return this.session.obtenerSesion().pipe(
-      map((sesion: Sesion) => {
+      map((sesion: Session) => {
         if (sesion.sessionActive) {
           return true;
         } else {

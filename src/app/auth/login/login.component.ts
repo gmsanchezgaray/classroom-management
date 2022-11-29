@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Session } from '../interfaces/session';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -23,12 +25,29 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private _snackbar: MatSnackBar
   ) {}
   ngOnInit(): void {}
   loginUser() {
     this.loading = true;
-    this.authService.login(this.loginForm.value);
-    this.router.navigateByUrl('/students');
+    this.authService.login(this.loginForm.value).subscribe((result) => {
+      if (typeof result !== 'undefined') {
+        const sesion: Session = {
+          sessionActive: true,
+          userInfo: result,
+        };
+        this.authService.sesionSubject.next(sesion);
+        this.router.navigateByUrl('/students');
+      } else {
+        this._snackbar.open('Username or password is invalid', '  ', {
+          panelClass: ['snackbar--error'],
+          verticalPosition: 'bottom',
+          horizontalPosition: 'center',
+          duration: 3000,
+        });
+      }
+      this.loading = false;
+    });
   }
 }

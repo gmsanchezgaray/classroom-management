@@ -111,6 +111,43 @@
               </small>
             </div>
 
+            <div class="col-md-12">
+              <input
+                class="form-control"
+                [ngClass]="
+                  studentForm.get('password')?.touched &&
+                  studentForm.get('password')?.valid
+                    ? 'form-control is-valid'
+                    : ''
+                "
+                [ngClass]="
+                  studentForm.get('password')?.touched &&
+                  studentForm.get('password')?.invalid
+                    ? 'is-invalid'
+                    : ''
+                "
+                type="password"
+                name="password"
+                placeholder="Password"
+                formControlName="password"
+              />
+              <small
+                *ngIf="
+                  studentForm.get('password')?.touched &&
+                  studentForm.get('password')?.valid
+                "
+                class="text-success"
+              >
+                Password field is valid!
+              </small>
+              <small
+                *ngIf="studentForm.get('password')?.touched && studentForm.get('password')?.errors?.['required']"
+                class="text-danger"
+              >
+                Password field cannot be blank!
+              </small>
+            </div>
+
             <div class="col-md-12 mt-3">
               <label class="mb-3 mr-3" for="gender">Gender: </label>
 

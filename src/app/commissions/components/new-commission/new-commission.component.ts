@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { switchMap, map } from 'rxjs';
+import { Session } from 'src/app/auth/interfaces/session';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { Course } from 'src/app/courses/interfaces/course';
 import { CoursesService } from 'src/app/courses/services/courses.service';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -22,6 +24,7 @@ export class NewCommissionComponent implements OnInit {
   public buttonDisable: boolean = false;
   public studentsEnrrolled: string[] = [];
   public indexSelected: string = '';
+  private _registration_manager: string = '';
 
   students$: Student[] = [];
   courses$: Course[] = [];
@@ -34,13 +37,13 @@ export class NewCommissionComponent implements OnInit {
     private coursesService: CoursesService,
     private studentsServices: StudentsService,
     private _snackbar: MatSnackBar,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private authService: AuthService
   ) {}
 
-  //TODO Obtener el valor de la session para poder asignar el registration_manager de la session activa
   ngOnInit(): void {
     this.commissionForm = this.fb.group({
-      registration_manager: ['dasdasdasdsd', [Validators.required]],
+      registration_manager: ['', []],
       enrollment_date: ['', [Validators.required]],
       enrolled_course_id: ['', [Validators.required]],
     });
@@ -51,6 +54,9 @@ export class NewCommissionComponent implements OnInit {
     this.studentsServices
       .GetAllStudents()
       .subscribe((students: Student[]) => (this.students$ = students));
+    this.authService.obtenerSesion().subscribe((data: any) => {
+      this._registration_manager = data.userInfo.id;
+    });
   }
 
   back() {
@@ -125,6 +131,7 @@ export class NewCommissionComponent implements OnInit {
       let data = {
         ...this.commissionForm.value,
         students_id: this.studentsEnrrolled,
+        registration_manager: this._registration_manager,
       };
       this.commissionsService.UpdateCommission(this._idCommission, data).then(
         (resp: any) => {
@@ -152,6 +159,7 @@ export class NewCommissionComponent implements OnInit {
       id: this.utilsService.guid(),
       ...this.commissionForm.value,
       students_id: this.studentsEnrrolled,
+      registration_manager: this._registration_manager,
     };
 
     this.commissionsService
