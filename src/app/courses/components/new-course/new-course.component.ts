@@ -4,9 +4,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { UtilsService } from 'src/app/services/utils.service';
-import { Student } from 'src/app/students/interfaces/students';
+import { Student } from 'src/app/models/students';
 import { StudentsService } from 'src/app/students/services/students.service';
 import { CoursesService } from '../../services/courses.service';
+import { Store } from '@ngrx/store';
+import { CourseState } from 'src/app/models/course.state';
+import { addCourse, updateCourse } from '../../state/courses.actions';
+import { Course } from 'src/app/models/course';
 
 @Component({
   selector: 'app-new-course',
@@ -27,7 +31,8 @@ export class NewCourseComponent implements OnInit {
     private coursesService: CoursesService,
     private studentsService: StudentsService,
     private _snackbar: MatSnackBar,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private storeCourses: Store<CourseState>
   ) {}
 
   ngOnInit(): void {
@@ -98,49 +103,34 @@ export class NewCourseComponent implements OnInit {
       return;
     }
     if (this._idCourse) {
-      this.coursesService
-        .UpdateCourse(this._idCourse, this.courseForm.value)
-        .then(
-          (resp: any) => {
-            this._snackbar.open('Course updated successfully', '  ', {
-              panelClass: ['snackbar--success'],
-              verticalPosition: 'top',
-              horizontalPosition: 'end',
-              duration: 3000,
-            });
-            this.router.navigateByUrl('courses');
-          },
-          (err) => {
-            this._snackbar.open(`Could not update course: ${err}`, '  ', {
-              panelClass: ['snackbar--error'],
-              verticalPosition: 'top',
-              horizontalPosition: 'end',
-              duration: 3000,
-            });
-          }
-        );
+      const course: Course = {
+        id: this._idCourse,
+        ...this.courseForm.value,
+      };
+      this.storeCourses.dispatch(updateCourse({ course }));
+      this._snackbar.open('Course updated successfully', '  ', {
+        panelClass: ['snackbar--success'],
+        verticalPosition: 'top',
+        horizontalPosition: 'end',
+        duration: 3000,
+      });
+      this.router.navigateByUrl('courses');
       return;
     }
 
-    let data = { id: this.utilsService.guid(), ...this.courseForm.value };
-    this.coursesService
-      .AddCourse(data)
-      .then((resp) => {
-        this._snackbar.open('Course created successfully', '  ', {
-          panelClass: ['snackbar--success'],
-          verticalPosition: 'top',
-          horizontalPosition: 'end',
-          duration: 3000,
-        });
-        this.router.navigateByUrl('courses');
-      })
-      .catch((err) => {
-        this._snackbar.open(`Could not create course: ${err}`, '  ', {
-          panelClass: ['snackbar--error'],
-          verticalPosition: 'top',
-          horizontalPosition: 'end',
-          duration: 3000,
-        });
-      });
+    const course: Course = {
+      id: this.utilsService.guid(),
+      ...this.courseForm.value,
+    };
+
+    this.storeCourses.dispatch(addCourse({ course }));
+
+    this._snackbar.open('Course created successfully', '  ', {
+      panelClass: ['snackbar--success'],
+      verticalPosition: 'top',
+      horizontalPosition: 'end',
+      duration: 3000,
+    });
+    this.router.navigateByUrl('courses');
   }
 }

@@ -14,6 +14,10 @@ import { DirectivesModule } from '../directives/directives.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
+import { reducer, studentsFeatureKey } from './state/students.reducer';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StudentsEffects } from './state/students.effects';
 
 @NgModule({
   declarations: [StudentsComponent, NewStudentComponent, StudentsListComponent],
@@ -27,6 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
     DirectivesModule,
     FormsModule,
     ReactiveFormsModule,
+    StoreModule.forFeature(studentsFeatureKey, reducer),
+    EffectsModule.forFeature([StudentsEffects]),
   ],
   providers: [StudentsService],
 })

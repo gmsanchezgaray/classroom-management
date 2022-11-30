@@ -11,6 +11,10 @@ import { MaterialModule } from '../material/material.module';
 import { DirectivesModule } from '../directives/directives.module';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { coursesFeatureKey, reducer } from './state/courses.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { CoursesEffects } from './state/courses.effects';
 
 @NgModule({
   declarations: [CoursesComponent, NewCourseComponent, CoursesListComponent],
@@ -21,6 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     ReactiveFormsModule,
     DirectivesModule,
+    StoreModule.forFeature(coursesFeatureKey, reducer),
+    EffectsModule.forFeature([CoursesEffects]),
   ],
   providers: [CoursesService],
 })

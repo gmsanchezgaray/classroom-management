@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Course } from '../interfaces/course';
+import { Course } from '../../models/course';
 
 @Injectable({
   providedIn: 'root',
@@ -14,25 +14,11 @@ export class CoursesService {
   }
 
   GetAllCourses(): Observable<Course[]> {
-    const url = 'api/courses';
-    return this.http.get<Course[]>(url);
+    return this.http.get<Course[]>('api/courses');
   }
 
-  AddCourse(course: Course) {
-    const url = 'api/courses';
-    return new Promise((resolve, reject) => {
-      this.http.post<Course>(url, course).subscribe(
-        (resp) => {
-          resolve(resp);
-          this.GetAllCourses();
-          this.courses$ = this.GetAllCourses();
-          console.log(this.courses$);
-        },
-        (error) => {
-          reject(error.status);
-        }
-      );
-    });
+  AddCourse(course: Course): Observable<Course> {
+    return this.http.post<Course>('api/courses', course);
   }
 
   GetCourseById(id: string): Observable<Course> {
@@ -40,35 +26,11 @@ export class CoursesService {
     return this.http.get<Course>(url);
   }
 
-  UpdateCourse(idCourse: string, object: Course) {
-    const url = `api/courses/${idCourse}`;
-    let data = { ...object, idTema: idCourse };
-
-    return new Promise((resolve, reject) => {
-      this.http.patch<Course>(url, data).subscribe(
-        (resp) => {
-          resolve(resp);
-        },
-        (error) => {
-          reject(error.status);
-        }
-      );
-    });
+  UpdateCourse(course: Course): Observable<Course> {
+    return this.http.patch<Course>(`api/courses/${course.id}`, course);
   }
 
-  DeleteCourse(id: string) {
-    const url = `api/courses/${id}`;
-    return new Promise((resolve, reject) => {
-      this.http.delete<Course>(url).subscribe(
-        (resp) => {
-          resolve(resp);
-          this.GetAllCourses();
-          this.courses$ = this.GetAllCourses();
-        },
-        (error) => {
-          reject(error.status);
-        }
-      );
-    });
+  DeleteCourse(course: Course) {
+    return this.http.delete<Course>(`api/courses/${course.id}`);
   }
 }

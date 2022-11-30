@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Commission } from '../interfaces/commission';
+import { Commission } from '../../models/commission';
 
 @Injectable({
   providedIn: 'root',

@@ -12,8 +12,8 @@ import {
   UrlTree,
 } from '@angular/router';
 import { map, Observable } from 'rxjs';
-import { Session } from '../auth/interfaces/session';
 import { AuthService } from '../auth/services/auth.service';
+import { Session } from '../models/session';
 
 @Injectable({
   providedIn: 'root',

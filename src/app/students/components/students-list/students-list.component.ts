@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Student } from '../../interfaces/students';
-import { StudentsService } from '../../services/students.service';
+import { Student } from '../../../models/students';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Store } from '@ngrx/store';
+import { StudentState } from 'src/app/models/student.state';
+import { deleteStudent, loadStudents } from '../../state/students.actions';
+import {
+  selectStateLoading,
+  selectStudents,
+} from '../../state/students.selector';
 
 @Component({
   selector: 'app-students-list',
@@ -21,26 +27,29 @@ export class StudentsListComponent implements OnInit {
   ];
 
   students$!: Observable<Student[]>;
+  loading$!: Observable<boolean>;
+  teachers$!: Observable<Student[]>;
+
   constructor(
-    private studentsService: StudentsService,
     private router: Router,
-    private _snackbar: MatSnackBar
+    private _snackbar: MatSnackBar,
+    private storeStudents: Store<StudentState>
   ) {
-    // this.students$ = this.studentsService.students$;
+    this.storeStudents.dispatch(loadStudents());
   }
 
   ngOnInit(): void {
-    this.students$ = this.studentsService.students$;
+    this.loading$ = this.storeStudents.select(selectStateLoading);
+    this.students$ = this.storeStudents.select(selectStudents);
   }
-  deleteStudent(index: string) {
-    this.studentsService.DeleteStudent(index).then((resp) => {
-      this._snackbar.open('Student deleted successfully', '  ', {
-        panelClass: ['snackbar--success'],
-        verticalPosition: 'top',
-        horizontalPosition: 'end',
-        duration: 3000,
-      });
-      this.ngOnInit();
+  deleteStudent(student: Student) {
+    this.storeStudents.dispatch(deleteStudent({ student }));
+
+    this._snackbar.open('Student deleted successfully', '  ', {
+      panelClass: ['snackbar--success'],
+      verticalPosition: 'top',
+      horizontalPosition: 'end',
+      duration: 3000,
     });
   }
   viewStudent(index: string) {

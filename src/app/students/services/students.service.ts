@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Student } from '../interfaces/students';
+import { Student } from '../../models/students';
 
 @Injectable({
   providedIn: 'root',
@@ -14,28 +14,15 @@ export class StudentsService {
   }
 
   GetAllStudents(): Observable<Student[]> {
-    const url = 'api/students';
-    return this.http.get<Student[]>(url).pipe(
+    return this.http.get<Student[]>('api/students').pipe(
       map((users: Student[]) => {
         return users.filter((user) => user.type === 'student');
       })
     );
   }
 
-  AddStudent(student: Student) {
-    const url = 'api/students';
-    return new Promise((resolve, reject) => {
-      this.http.post<Student>(url, student).subscribe(
-        (resp) => {
-          resolve(resp);
-          this.GetAllStudents();
-          this.students$ = this.GetAllStudents();
-        },
-        (error) => {
-          reject(error.status);
-        }
-      );
-    });
+  AddStudent(student: Student): Observable<Student> {
+    return this.http.post<Student>('api/students', student);
   }
 
   GetStudentById(id: string): Observable<Student> {
@@ -43,41 +30,16 @@ export class StudentsService {
     return this.http.get<Student>(url);
   }
 
-  UpdateStudent(idStudent: string, object: Student) {
-    const url = `api/students/${idStudent}`;
-    let data = { ...object, idTema: idStudent };
-
-    return new Promise((resolve, reject) => {
-      this.http.patch<Student>(url, data).subscribe(
-        (resp) => {
-          resolve(resp);
-        },
-        (error) => {
-          reject(error.status);
-        }
-      );
-    });
+  UpdateStudent(student: Student): Observable<Student> {
+    return this.http.patch<Student>(`api/students/${student.id}`, student);
   }
 
-  DeleteStudent(id: string) {
-    const url = `api/students/${id}`;
-    return new Promise((resolve, reject) => {
-      this.http.delete<Student>(url).subscribe(
-        (resp) => {
-          resolve(resp);
-          this.GetAllStudents();
-          this.students$ = this.GetAllStudents();
-        },
-        (error) => {
-          reject(error.status);
-        }
-      );
-    });
+  DeleteStudent(student: Student): Observable<Student> {
+    return this.http.delete<Student>(`api/students/${student.id}`);
   }
 
   GetAllTeachers(): Observable<Student[]> {
-    const url = 'api/students';
-    return this.http.get<Student[]>(url).pipe(
+    return this.http.get<Student[]>('api/students').pipe(
       map((users: Student[]) => {
         return users.filter((user) => user.type === 'teacher');
       })

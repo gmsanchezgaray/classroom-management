@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { Student } from 'src/app/students/interfaces/students';
-import { LoginForm } from '../interfaces/login-form';
-import { Session } from '../interfaces/session';
+import { LoginForm } from 'src/app/models/login-form';
+import { Session } from 'src/app/models/session';
+import { Student } from 'src/app/models/students';
 
 @Injectable({
   providedIn: 'root',

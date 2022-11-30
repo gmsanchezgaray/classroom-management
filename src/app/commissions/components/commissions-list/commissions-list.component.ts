@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Course } from 'src/app/courses/interfaces/course';
+import { Course } from 'src/app/models/course';
 import { CoursesService } from 'src/app/courses/services/courses.service';
-import { Commission } from '../../interfaces/commission';
+import { Commission } from '../../../models/commission';
 import { CommissionsService } from '../../services/commissions.service';
 
 @Component({

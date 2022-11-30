@@ -2,9 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { switchMap } from 'rxjs';
+import { StudentState } from 'src/app/models/student.state';
+import { Student } from 'src/app/models/students';
 import { UtilsService } from 'src/app/services/utils.service';
 import { StudentsService } from '../../services/students.service';
+import { addStudent, updateStudent } from '../../state/students.actions';
 
 @Component({
   selector: 'app-new-student',
@@ -23,7 +27,8 @@ export class NewStudentComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private studentsService: StudentsService,
     private _snackbar: MatSnackBar,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private storeStudents: Store<StudentState>
   ) {}
 
   ngOnInit(): void {
@@ -63,7 +68,6 @@ export class NewStudentComponent implements OnInit {
       this.activatedRoute.params
         .pipe(switchMap(({ id }) => this.studentsService.GetStudentById(id)))
         .subscribe((student) => {
-          console.log(student);
           this.studentForm.patchValue(student),
             (this.tittle = 'Consult'),
             this.studentForm.disable(),
@@ -91,49 +95,34 @@ export class NewStudentComponent implements OnInit {
     }
 
     if (this._idStudent !== '') {
-      this.studentsService
-        .UpdateStudent(this._idStudent, this.studentForm.value)
-        .then(
-          (resp: any) => {
-            this._snackbar.open('Student updated successfully', '  ', {
-              panelClass: ['snackbar--success'],
-              verticalPosition: 'top',
-              horizontalPosition: 'end',
-              duration: 3000,
-            });
-            this.router.navigateByUrl('students');
-          },
-          (err) => {
-            this._snackbar.open(`Could not update student: ${err}`, '  ', {
-              panelClass: ['snackbar--error'],
-              verticalPosition: 'top',
-              horizontalPosition: 'end',
-              duration: 3000,
-            });
-          }
-        );
+      const student: Student = {
+        id: this._idStudent,
+        ...this.studentForm.value,
+      };
+
+      this.storeStudents.dispatch(updateStudent({ student }));
+      this._snackbar.open('Student updated successfully', '  ', {
+        panelClass: ['snackbar--success'],
+        verticalPosition: 'top',
+        horizontalPosition: 'end',
+        duration: 3000,
+      });
+      this.router.navigateByUrl('students');
       return;
     }
 
-    let data = { id: this.utilsService.guid(), ...this.studentForm.value };
-    this.studentsService
-      .AddStudent(data)
-      .then((resp) => {
-        this._snackbar.open('Student created successfully', '  ', {
-          panelClass: ['snackbar--success'],
-          verticalPosition: 'top',
-          horizontalPosition: 'end',
-          duration: 3000,
-        });
-        this.router.navigateByUrl('students');
-      })
-      .catch((err) => {
-        this._snackbar.open(`Could not create student: ${err}`, '  ', {
-          panelClass: ['snackbar--error'],
-          verticalPosition: 'top',
-          horizontalPosition: 'end',
-          duration: 3000,
-        });
-      });
+    const student: Student = {
+      id: this.utilsService.guid(),
+      ...this.studentForm.value,
+    };
+
+    this.storeStudents.dispatch(addStudent({ student }));
+    this._snackbar.open('Student created successfully', '  ', {
+      panelClass: ['snackbar--success'],
+      verticalPosition: 'top',
+      horizontalPosition: 'end',
+      duration: 3000,
+    });
+    this.router.navigateByUrl('students');
   }
 }

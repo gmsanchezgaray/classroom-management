@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Session } from '../interfaces/session';
+import { Session } from 'src/app/models/session';
 import { AuthService } from '../services/auth.service';
 
 @Component({

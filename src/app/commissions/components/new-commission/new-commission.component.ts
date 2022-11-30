@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, map } from 'rxjs';
-import { Session } from 'src/app/auth/interfaces/session';
+import { switchMap } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Course } from 'src/app/courses/interfaces/course';
+import { Course } from 'src/app/models/course';
 import { CoursesService } from 'src/app/courses/services/courses.service';
 import { UtilsService } from 'src/app/services/utils.service';
-import { Student } from 'src/app/students/interfaces/students';
+import { Student } from 'src/app/models/students';
 import { StudentsService } from 'src/app/students/services/students.service';
 import { CommissionsService } from '../../services/commissions.service';
 
