@@ -101,7 +101,8 @@
       "birthdate": "1992-07-23",
       "type": "student",
       "id": "3639e7c8-16f9-ef7e-0a4da372",
-      "isAdmin": false
+      "isAdmin": false,
+      "password": "12345678"
     },
     {
       "name": "Melina",
@@ -228,7 +229,7 @@
     {
       "id": "c552b9e0-2a95-2ffe-cd061536",
       "registration_manager": "97393df6-89a7-b951-3a606379",
-      "enrollment_date": "2022-11-25",
+      "enrollment_date": "2022-11-26",
       "enrolled_course_id": "b8a8e948-1915-3471-f644c0ce",
       "students_id": [
         "46ceca4a-227d-01ec-97eac9cc",
@@ -264,7 +265,7 @@
     {
       "id": "0ac0805c-839e-c86e-ececaf13",
       "registration_manager": "97393df6-89a7-b951-3a606379",
-      "enrollment_date": "2022-11-26",
+      "enrollment_date": "2022-12-25",
       "enrolled_course_id": "cecee435-f3f9-04de-1cf4424b",
       "students_id": [
         "97393df6-89a7-b951-3a606379",
@@ -273,6 +274,18 @@
         "47c554be-42b1-7cbf-154a8828"
       ],
       "idTema": "0ac0805c-839e-c86e-ececaf13"
+    },
+    {
+      "id": "3631d53f-3ff3-7ea6-7bd6cd4e",
+      "registration_manager": "3639e7c8-16f9-ef7e-0a4da372",
+      "enrollment_date": "2022-11-19",
+      "enrolled_course_id": "0bcab04c-45da-9b7b-9f3f6d9f",
+      "students_id": [
+        "8eb30fa9-2a5e-465a-b2f41ea4",
+        "3639e7c8-16f9-ef7e-0a4da372",
+        "e48cab97-f04a-ef7c-64f47b6a",
+        "97393df6-89a7-b951-3a606379"
+      ]
     }
   ]
 }

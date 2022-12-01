@@ -3,9 +3,20 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Course } from 'src/app/models/course';
-import { CoursesService } from 'src/app/courses/services/courses.service';
 import { Commission } from '../../../models/commission';
-import { CommissionsService } from '../../services/commissions.service';
+import { CommissionState } from 'src/app/models/commission.state';
+import { Store } from '@ngrx/store';
+import {
+  deleteCommission,
+  loadCommissions,
+} from '../../state/commissions.actions';
+import {
+  selectCommissions,
+  selectStateLoading,
+} from '../../state/commissions.selector';
+import { CourseState } from 'src/app/models/course.state';
+import { selectCourses } from 'src/app/courses/state/courses.selector';
+import { loadCourses } from 'src/app/courses/state/courses.actions';
 
 @Component({
   selector: 'app-commissions-list',
@@ -23,48 +34,56 @@ export class CommissionsListComponent implements OnInit {
   ];
 
   commissions$!: Observable<Commission[]>;
-  courses$: Course[] = [];
+  courses!: Course[];
+  loading$!: Observable<boolean>;
   constructor(
-    private commissionsService: CommissionsService,
     private router: Router,
     private _snackbar: MatSnackBar,
-    private coursesService: CoursesService
-  ) {}
+    private storeCommissions: Store<CommissionState>,
+    private storeCourse: Store<CourseState>
+  ) {
+    this.storeCommissions.dispatch(loadCommissions());
+    this.storeCourse.dispatch(loadCourses());
+  }
 
   ngOnInit(): void {
-    this.commissions$ = this.commissionsService.commissions$;
-    this.coursesService
-      .GetAllCourses()
-      .subscribe((courses: Course[]) => (this.courses$ = courses));
+    this.commissions$ = this.storeCommissions.select(selectCommissions);
+    this.storeCourse
+      .select(selectCourses)
+      .subscribe((data) => (this.courses = data));
+
+    this.loading$ = this.storeCommissions.select(selectStateLoading);
   }
 
-  deleteCommission(index: string) {
-    this.commissionsService.DeleteCommission(index).then((resp) => {
-      this._snackbar.open('Commision deleted successfully', '  ', {
-        panelClass: ['snackbar--success'],
-        verticalPosition: 'top',
-        horizontalPosition: 'end',
-        duration: 3000,
-      });
-      this.ngOnInit();
+  deleteCommission(commission: Commission) {
+    this.storeCommissions.dispatch(deleteCommission({ commission }));
+
+    this._snackbar.open('Commision deleted successfully', '  ', {
+      panelClass: ['snackbar--success'],
+      verticalPosition: 'top',
+      horizontalPosition: 'end',
+      duration: 3000,
     });
   }
+
   viewCommission(index: string) {
     this.router.navigateByUrl(`/commissions/view/${index}`, {
       skipLocationChange: true,
     });
   }
+
   editCommission(index: string) {
     this.router.navigateByUrl(`/commissions/edit/${index}`, {
       skipLocationChange: true,
     });
   }
+
   addCommission() {
     this.router.navigateByUrl('/commissions/new');
   }
 
   showCourseName(index: string) {
-    let result = this.courses$.find((element) => element.id === index);
+    let result = this.courses.find((element) => element.id === index);
     return result?.name;
   }
 }

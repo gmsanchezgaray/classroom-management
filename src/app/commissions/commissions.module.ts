@@ -8,8 +8,12 @@ import { CommissionsListComponent } from './components/commissions-list/commissi
 import { NewCommissionComponent } from './components/new-commission/new-commission.component';
 import { MaterialModule } from '../material/material.module';
 import { DirectivesModule } from '../directives/directives.module';
-import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { commissionsFeatureKey, reducer } from './state/commissions.reducer';
+import { CommissionsEffects } from './state/commissions.effects';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [
@@ -21,10 +25,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     CommissionRoutingModule,
     MaterialModule,
-    SharedModule,
+    CoreModule,
     DirectivesModule,
     ReactiveFormsModule,
     FormsModule,
+    StoreModule.forFeature(commissionsFeatureKey, reducer),
+    EffectsModule.forFeature([CommissionsEffects]),
   ],
   providers: [CommissionsService],
 })

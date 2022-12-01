@@ -9,12 +9,12 @@ import { CoursesComponent } from './components/courses/courses.component';
 import { NewCourseComponent } from './components/new-course/new-course.component';
 import { MaterialModule } from '../material/material.module';
 import { DirectivesModule } from '../directives/directives.module';
-import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { coursesFeatureKey, reducer } from './state/courses.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { CoursesEffects } from './state/courses.effects';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [CoursesComponent, NewCourseComponent, CoursesListComponent],
@@ -22,7 +22,7 @@ import { CoursesEffects } from './state/courses.effects';
     CommonModule,
     CoursesRoutingModule,
     MaterialModule,
-    SharedModule,
+    CoreModule,
     ReactiveFormsModule,
     DirectivesModule,
     StoreModule.forFeature(coursesFeatureKey, reducer),

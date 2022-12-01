@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { LoginForm } from 'src/app/models/login-form';
 import { Session } from 'src/app/models/session';
@@ -8,15 +9,14 @@ import { Student } from 'src/app/models/students';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
-  $users: any;
+export class SessionService {
   sesionSubject!: BehaviorSubject<Session>;
 
-  constructor(private http: HttpClient) {
-    const sesion: Session = {
+  constructor(private http: HttpClient, private router: Router) {
+    const session: Session = {
       sessionActive: false,
     };
-    this.sesionSubject = new BehaviorSubject(sesion);
+    this.sesionSubject = new BehaviorSubject(session);
   }
 
   login(formGroup: LoginForm) {

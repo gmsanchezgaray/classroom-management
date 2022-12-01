@@ -11,9 +11,10 @@ import {
   UrlSegment,
   UrlTree,
 } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
-import { AuthService } from '../auth/services/auth.service';
-import { Session } from '../models/session';
+import { Session } from 'src/app/models/session';
+import { selectSessionActive } from '../state/session.selector';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,7 @@ import { Session } from '../models/session';
 export class AuthGuard
   implements CanActivate, CanActivateChild, CanDeactivate<unknown>, CanLoad
 {
-  constructor(private session: AuthService, private router: Router) {}
+  constructor(private router: Router, private storeSession: Store<Session>) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -31,12 +32,12 @@ export class AuthGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return this.session.obtenerSesion().pipe(
-      map((sesion: Session) => {
-        if (sesion.sessionActive) {
+    return this.storeSession.select(selectSessionActive).pipe(
+      map((session: Session) => {
+        if (session.sessionActive) {
           return true;
         } else {
-          this.router.navigate(['/login']);
+          this.router.navigate(['login']);
           return false;
         }
       })

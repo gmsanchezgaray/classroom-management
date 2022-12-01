@@ -12,12 +12,12 @@ import { MaterialModule } from '../material/material.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { DirectivesModule } from '../directives/directives.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { reducer, studentsFeatureKey } from './state/students.reducer';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StudentsEffects } from './state/students.effects';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [StudentsComponent, NewStudentComponent, StudentsListComponent],
@@ -27,7 +27,7 @@ import { StudentsEffects } from './state/students.effects';
     StudentsRoutingModule,
     MaterialModule,
     PipesModule,
-    SharedModule,
+    CoreModule,
     DirectivesModule,
     FormsModule,
     ReactiveFormsModule,

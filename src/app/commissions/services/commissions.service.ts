@@ -18,21 +18,8 @@ export class CommissionsService {
     return this.http.get<Commission[]>(url);
   }
 
-  AddCommission(course: Commission) {
-    const url = 'api/commissions';
-    return new Promise((resolve, reject) => {
-      this.http.post<Commission>(url, course).subscribe(
-        (resp) => {
-          resolve(resp);
-          this.GetAllCommissions();
-          this.commissions$ = this.GetAllCommissions();
-          console.log(this.commissions$);
-        },
-        (error) => {
-          reject(error.status);
-        }
-      );
-    });
+  AddCommission(commission: Commission): Observable<Commission> {
+    return this.http.post<Commission>('api/commissions', commission);
   }
 
   GetCommissionById(id: string): Observable<Commission> {
@@ -40,35 +27,14 @@ export class CommissionsService {
     return this.http.get<Commission>(url);
   }
 
-  UpdateCommission(idCommission: string, object: Commission) {
-    const url = `api/commissions/${idCommission}`;
-    let data = { ...object, idTema: idCommission };
-
-    return new Promise((resolve, reject) => {
-      this.http.patch<Commission>(url, data).subscribe(
-        (resp) => {
-          resolve(resp);
-        },
-        (error) => {
-          reject(error.status);
-        }
-      );
-    });
+  UpdateCommission(commission: Commission): Observable<Commission> {
+    return this.http.patch<Commission>(
+      `api/commissions/${commission.id}`,
+      commission
+    );
   }
 
-  DeleteCommission(id: string) {
-    const url = `api/commissions/${id}`;
-    return new Promise((resolve, reject) => {
-      this.http.delete<Commission>(url).subscribe(
-        (resp) => {
-          resolve(resp);
-          this.GetAllCommissions();
-          this.commissions$ = this.GetAllCommissions();
-        },
-        (error) => {
-          reject(error.status);
-        }
-      );
-    });
+  DeleteCommission(commission: Commission): Observable<Commission> {
+    return this.http.delete<Commission>(`api/commissions/${commission.id}`);
   }
 }

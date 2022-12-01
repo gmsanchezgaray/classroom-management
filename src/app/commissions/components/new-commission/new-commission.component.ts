@@ -3,13 +3,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { AuthService } from 'src/app/auth/services/auth.service';
 import { Course } from 'src/app/models/course';
-import { CoursesService } from 'src/app/courses/services/courses.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { Student } from 'src/app/models/students';
-import { StudentsService } from 'src/app/students/services/students.service';
 import { CommissionsService } from '../../services/commissions.service';
+import {
+  addCommission,
+  updateCommission,
+} from '../../state/commissions.actions';
+import { Store } from '@ngrx/store';
+import { CommissionState } from 'src/app/models/commission.state';
+import { Commission } from 'src/app/models/commission';
+import { CourseState } from 'src/app/models/course.state';
+import { Session } from 'src/app/models/session';
+import { selectCourses } from 'src/app/courses/state/courses.selector';
+import { selectSessionActive } from 'src/app/core/state/session.selector';
+import { StudentState } from 'src/app/models/student.state';
+import { selectStudents } from 'src/app/students/state/students.selector';
 
 @Component({
   selector: 'app-new-commission',
@@ -23,21 +33,22 @@ export class NewCommissionComponent implements OnInit {
   public buttonDisable: boolean = false;
   public studentsEnrrolled: string[] = [];
   public indexSelected: string = '';
-  private _registration_manager: string = '';
 
   students$: Student[] = [];
   courses$: Course[] = [];
   private _idCommission: string = '';
+  currentUser!: Session;
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private commissionsService: CommissionsService,
-    private coursesService: CoursesService,
-    private studentsServices: StudentsService,
     private _snackbar: MatSnackBar,
     private utilsService: UtilsService,
-    private authService: AuthService
+    private storeCommissions: Store<CommissionState>,
+    private storeCourses: Store<CourseState>,
+    private storeSession: Store<Session>,
+    private storeStudents: Store<StudentState>
   ) {}
 
   ngOnInit(): void {
@@ -46,16 +57,18 @@ export class NewCommissionComponent implements OnInit {
       enrollment_date: ['', [Validators.required]],
       enrolled_course_id: ['', [Validators.required]],
     });
+
     this.loadView();
-    this.coursesService
-      .GetAllCourses()
-      .subscribe((courses: Course[]) => (this.courses$ = courses));
-    this.studentsServices
-      .GetAllStudents()
-      .subscribe((students: Student[]) => (this.students$ = students));
-    this.authService.obtenerSesion().subscribe((data: any) => {
-      this._registration_manager = data.userInfo.id;
-    });
+
+    this.storeCourses
+      .select(selectCourses)
+      .subscribe((data) => (this.courses$ = data));
+    this.storeStudents
+      .select(selectStudents)
+      .subscribe((data) => (this.students$ = data));
+    this.storeSession
+      .select(selectSessionActive)
+      .subscribe((data) => (this.currentUser = data));
   }
 
   back() {
@@ -126,60 +139,42 @@ export class NewCommissionComponent implements OnInit {
       });
       return;
     }
-    if (this._idCommission) {
-      let data = {
+    if (this._idCommission !== '') {
+      const commission: Commission = {
+        id: this._idCommission,
         ...this.commissionForm.value,
         students_id: this.studentsEnrrolled,
-        registration_manager: this._registration_manager,
+        registration_manager: this.currentUser.userInfo?.id,
       };
-      this.commissionsService.UpdateCommission(this._idCommission, data).then(
-        (resp: any) => {
-          this._snackbar.open('Commission updated successfully', '  ', {
-            panelClass: ['snackbar--success'],
-            verticalPosition: 'top',
-            horizontalPosition: 'end',
-            duration: 3000,
-          });
-          this.router.navigateByUrl('commissions');
-        },
-        (err) => {
-          this._snackbar.open(`Could not update commission: ${err}`, '  ', {
-            panelClass: ['snackbar--error'],
-            verticalPosition: 'top',
-            horizontalPosition: 'end',
-            duration: 3000,
-          });
-        }
-      );
+
+      this.storeCommissions.dispatch(updateCommission({ commission }));
+      this._snackbar.open('Commission updated successfully', '  ', {
+        panelClass: ['snackbar--success'],
+        verticalPosition: 'top',
+        horizontalPosition: 'end',
+        duration: 3000,
+      });
+      this.router.navigateByUrl('commissions');
+
       return;
     }
 
-    let data = {
+    const commission: Commission = {
       id: this.utilsService.guid(),
       ...this.commissionForm.value,
       students_id: this.studentsEnrrolled,
-      registration_manager: this._registration_manager,
+      registration_manager: this.currentUser.userInfo?.id,
     };
 
-    this.commissionsService
-      .AddCommission(data)
-      .then((resp) => {
-        this._snackbar.open('Commission created successfully', '  ', {
-          panelClass: ['snackbar--success'],
-          verticalPosition: 'top',
-          horizontalPosition: 'end',
-          duration: 3000,
-        });
-        this.router.navigateByUrl('commissions');
-      })
-      .catch((err) => {
-        this._snackbar.open(`Could not create commission: ${err}`, '  ', {
-          panelClass: ['snackbar--error'],
-          verticalPosition: 'top',
-          horizontalPosition: 'end',
-          duration: 3000,
-        });
-      });
+    this.storeCommissions.dispatch(addCommission({ commission }));
+
+    this._snackbar.open('Commission created successfully', '  ', {
+      panelClass: ['snackbar--success'],
+      verticalPosition: 'top',
+      horizontalPosition: 'end',
+      duration: 3000,
+    });
+    this.router.navigateByUrl('commissions');
   }
 
   // Actions for students enrrolled
