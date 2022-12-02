@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { LoginForm } from 'src/app/models/login-form';
 import { Session } from 'src/app/models/session';
-import { Student } from 'src/app/models/students';
+import { User } from 'src/app/models/users';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +11,7 @@ import { Student } from 'src/app/models/students';
 export class SessionService {
   sesionSubject!: BehaviorSubject<Session>;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient) {
     const session: Session = {
       sessionActive: false,
     };
@@ -20,18 +19,14 @@ export class SessionService {
   }
 
   login(formGroup: LoginForm) {
-    return this.http.get<Student[]>('api/students').pipe(
-      map((usuarios: Student[]) => {
+    return this.http.get<User[]>('api/users').pipe(
+      map((usuarios: User[]) => {
         return usuarios.filter(
-          (user: Student) =>
+          (user: User) =>
             user.email === formGroup.email &&
             user.password === formGroup.password
         )[0];
       })
     );
-  }
-
-  obtenerSesion(): Observable<Session> {
-    return this.sesionSubject.asObservable();
   }
 }

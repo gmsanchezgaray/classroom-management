@@ -14,7 +14,7 @@ export class StudentsService {
   }
 
   GetAllStudents(): Observable<Student[]> {
-    return this.http.get<Student[]>('api/students').pipe(
+    return this.http.get<Student[]>('api/users').pipe(
       map((users: Student[]) => {
         return users.filter((user) => user.type === 'student');
       })
@@ -22,16 +22,16 @@ export class StudentsService {
   }
 
   AddStudent(student: Student): Observable<Student> {
-    return this.http.post<Student>('api/students', student);
+    return this.http.post<Student>('api/users', student);
   }
 
   GetStudentById(id: string): Observable<Student> {
-    const url = `api/students/${id}`;
+    const url = `api/users/${id}`;
     return this.http.get<Student>(url);
   }
 
   UpdateStudent(student: Student): Observable<Student> {
-    return this.http.patch<Student>(`api/students/${student.id}`, student);
+    return this.http.patch<Student>(`api/users/${student.id}`, student);
   }
 
   DeleteStudent(student: Student): Observable<Student> {
@@ -39,7 +39,7 @@ export class StudentsService {
   }
 
   GetAllTeachers(): Observable<Student[]> {
-    return this.http.get<Student[]>('api/students').pipe(
+    return this.http.get<Student[]>('api/users').pipe(
       map((users: Student[]) => {
         return users.filter((user) => user.type === 'teacher');
       })

@@ -4,59 +4,59 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { switchMap } from 'rxjs';
-import { StudentState } from 'src/app/models/student.state';
-import { Student } from 'src/app/models/students';
+// import { StudentState } from 'src/app/models/student.state';
+import { User } from 'src/app/models/users';
 import { UtilsService } from 'src/app/services/utils.service';
-import { StudentsService } from '../../services/students.service';
-import { addStudent, updateStudent } from '../../state/students.actions';
+import { UsersService } from '../../services/users.service';
+// import { addStudent, updateStudent } from '../../state/students.actions';
 
 @Component({
-  selector: 'app-new-student',
-  templateUrl: './new-student.component.html',
-  styleUrls: ['./new-student.component.scss'],
+  selector: 'app-new-user',
+  templateUrl: './new-user.component.html',
+  styleUrls: ['./new-user.component.scss'],
 })
-export class NewStudentComponent implements OnInit {
-  public studentForm!: FormGroup;
+export class NewUserComponent implements OnInit {
+  public userForm!: FormGroup;
   tittle!: string;
   textButton!: string;
   buttonDisable: boolean = false;
-  private _idStudent: string = '';
+  private _idUser: string = '';
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private studentsService: StudentsService,
+    private usersService: UsersService,
     private _snackbar: MatSnackBar,
-    private utilsService: UtilsService,
-    private storeStudents: Store<StudentState>
+    private utilsService: UtilsService // private storeStudents: Store<StudentState>
   ) {}
 
   ngOnInit(): void {
-    this.studentForm = this.fb.group({
+    this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.max(100)]],
       surname: ['', [Validators.required, Validators.max(100)]],
       email: ['', Validators.required],
       password: ['', Validators.required],
       birthdate: ['', [Validators.required]],
       gender: ['', Validators.required],
+      type: ['', Validators.required],
     });
     this.loadView();
   }
 
   back() {
-    this.router.navigateByUrl('/students');
+    this.router.navigateByUrl('/users');
   }
 
   loadView() {
     if (this.router.url.includes('edit')) {
       this.activatedRoute.params
-        .pipe(switchMap(({ id }) => this.studentsService.GetStudentById(id)))
+        .pipe(switchMap(({ id }) => this.usersService.GetUserById(id)))
         .subscribe(
-          (student) => (
-            this.studentForm.patchValue(student),
+          (user) => (
+            this.userForm.patchValue(user),
             (this.tittle = 'Edit'),
             (this.textButton = 'Edit'),
-            (this._idStudent = student.id)
+            (this._idUser = user.id)
           )
         );
       return;
@@ -64,11 +64,11 @@ export class NewStudentComponent implements OnInit {
 
     if (this.router.url.includes('view')) {
       this.activatedRoute.params
-        .pipe(switchMap(({ id }) => this.studentsService.GetStudentById(id)))
-        .subscribe((student) => {
-          this.studentForm.patchValue(student),
+        .pipe(switchMap(({ id }) => this.usersService.GetUserById(id)))
+        .subscribe((user) => {
+          this.userForm.patchValue(user),
             (this.tittle = 'Consult'),
-            this.studentForm.disable(),
+            this.userForm.disable(),
             (this.buttonDisable = true);
         });
       return;
@@ -81,8 +81,8 @@ export class NewStudentComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.studentForm.invalid) {
-      this.studentForm.markAllAsTouched();
+    if (this.userForm.invalid) {
+      this.userForm.markAllAsTouched();
       this._snackbar.open('You must complete the required fields', '  ', {
         panelClass: ['snackbar--warning'],
         verticalPosition: 'top',
@@ -92,14 +92,14 @@ export class NewStudentComponent implements OnInit {
       return;
     }
 
-    if (this._idStudent !== '') {
-      const student: Student = {
-        id: this._idStudent,
-        ...this.studentForm.value,
+    if (this._idUser !== '') {
+      const user: User = {
+        id: this._idUser,
+        ...this.userForm.value,
       };
 
-      this.storeStudents.dispatch(updateStudent({ student }));
-      this._snackbar.open('Student updated successfully', '  ', {
+      // this.storeStudents.dispatch(updateStudent({ user }));
+      this._snackbar.open('User updated successfully', '  ', {
         panelClass: ['snackbar--success'],
         verticalPosition: 'top',
         horizontalPosition: 'end',
@@ -109,18 +109,18 @@ export class NewStudentComponent implements OnInit {
       return;
     }
 
-    const student: Student = {
+    const user: User = {
       id: this.utilsService.guid(),
-      ...this.studentForm.value,
+      ...this.userForm.value,
     };
 
-    this.storeStudents.dispatch(addStudent({ student }));
-    this._snackbar.open('Student created successfully', '  ', {
+    // this.storeStudents.dispatch(addStudent({ user }));
+    this._snackbar.open('Usert created successfully', '  ', {
       panelClass: ['snackbar--success'],
       verticalPosition: 'top',
       horizontalPosition: 'end',
       duration: 3000,
     });
-    this.router.navigateByUrl('students');
+    this.router.navigateByUrl('users');
   }
 }

@@ -17,6 +17,8 @@ import {
 import { CourseState } from 'src/app/models/course.state';
 import { selectCourses } from 'src/app/courses/state/courses.selector';
 import { loadCourses } from 'src/app/courses/state/courses.actions';
+import { Session } from 'src/app/models/session';
+import { selectSessionActive } from 'src/app/core/state/session.selector';
 
 @Component({
   selector: 'app-commissions-list',
@@ -40,7 +42,8 @@ export class CommissionsListComponent implements OnInit {
     private router: Router,
     private _snackbar: MatSnackBar,
     private storeCommissions: Store<CommissionState>,
-    private storeCourse: Store<CourseState>
+    private storeCourse: Store<CourseState>,
+    private storeSession: Store<Session>
   ) {
     this.storeCommissions.dispatch(loadCommissions());
     this.storeCourse.dispatch(loadCourses());
@@ -56,13 +59,30 @@ export class CommissionsListComponent implements OnInit {
   }
 
   deleteCommission(commission: Commission) {
-    this.storeCommissions.dispatch(deleteCommission({ commission }));
-
-    this._snackbar.open('Commision deleted successfully', '  ', {
-      panelClass: ['snackbar--success'],
-      verticalPosition: 'top',
-      horizontalPosition: 'end',
-      duration: 3000,
+    this.storeSession.select(selectSessionActive).subscribe((data: Session) => {
+      if (
+        data.userInfo?.type === 'admin' ||
+        data.userInfo?.type === 'developer'
+      ) {
+        this.storeCommissions.dispatch(deleteCommission({ commission }));
+        this._snackbar.open('Commision deleted successfully', '  ', {
+          panelClass: ['snackbar--success'],
+          verticalPosition: 'top',
+          horizontalPosition: 'end',
+          duration: 3000,
+        });
+      } else {
+        this._snackbar.open(
+          'You do not have permissions to access this site',
+          '  ',
+          {
+            panelClass: ['snackbar--warning'],
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            duration: 3000,
+          }
+        );
+      }
     });
   }
 

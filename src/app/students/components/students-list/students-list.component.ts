@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Student } from '../../../models/students';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,6 +10,8 @@ import {
   selectStateLoading,
   selectStudents,
 } from '../../state/students.selector';
+import { Session } from 'src/app/models/session';
+import { selectSessionActive } from 'src/app/core/state/session.selector';
 
 @Component({
   selector: 'app-students-list',
@@ -22,7 +24,6 @@ export class StudentsListComponent implements OnInit {
     'email',
     'gender',
     'birthdate',
-    'admin',
     'actions',
   ];
 
@@ -33,7 +34,8 @@ export class StudentsListComponent implements OnInit {
   constructor(
     private router: Router,
     private _snackbar: MatSnackBar,
-    private storeStudents: Store<StudentState>
+    private storeStudents: Store<StudentState>,
+    private storeSession: Store<Session>
   ) {
     this.storeStudents.dispatch(loadStudents());
   }
@@ -42,16 +44,36 @@ export class StudentsListComponent implements OnInit {
     this.loading$ = this.storeStudents.select(selectStateLoading);
     this.students$ = this.storeStudents.select(selectStudents);
   }
-  deleteStudent(student: Student) {
-    this.storeStudents.dispatch(deleteStudent({ student }));
 
-    this._snackbar.open('Student deleted successfully', '  ', {
-      panelClass: ['snackbar--success'],
-      verticalPosition: 'top',
-      horizontalPosition: 'end',
-      duration: 3000,
+  deleteStudent(student: Student) {
+    this.storeSession.select(selectSessionActive).subscribe((data: Session) => {
+      if (
+        data.userInfo?.type === 'admin' ||
+        data.userInfo?.type === 'developer'
+      ) {
+        this.storeStudents.dispatch(deleteStudent({ student }));
+
+        this._snackbar.open('Student deleted successfully', '  ', {
+          panelClass: ['snackbar--success'],
+          verticalPosition: 'top',
+          horizontalPosition: 'end',
+          duration: 3000,
+        });
+      } else {
+        this._snackbar.open(
+          'You do not have permissions to access this site',
+          '  ',
+          {
+            panelClass: ['snackbar--warning'],
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            duration: 3000,
+          }
+        );
+      }
     });
   }
+
   viewStudent(index: string) {
     this.router.navigateByUrl(`/students/view/${index}`, {
       skipLocationChange: true,

@@ -14,5 +14,8 @@ export const reducer = createReducer(
   on(SessionActions.loadSession, (state) => state),
   on(SessionActions.loadSessionActive, (state, { currentUser }) => {
     return { ...state, sessionActive: true, userInfo: currentUser };
+  }),
+  on(SessionActions.deleteSession, (state, { sessionActive }) => {
+    return { ...state, sessionActive, userInfo: null };
   })
 );

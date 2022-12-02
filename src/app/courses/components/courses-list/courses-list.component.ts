@@ -3,7 +3,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { selectSessionActive } from 'src/app/core/state/session.selector';
 import { CourseState } from 'src/app/models/course.state';
+import { Session } from 'src/app/models/session';
 import { Course } from '../../../models/course';
 import { CoursesService } from '../../services/courses.service';
 import {
@@ -39,7 +41,8 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     private coursesService: CoursesService,
     private router: Router,
     private _snackbar: MatSnackBar,
-    private storeCourses: Store<CourseState>
+    private storeCourses: Store<CourseState>,
+    private storeSession: Store<Session>
   ) {
     this.storeCourses.dispatch(loadCourses());
   }
@@ -51,8 +54,8 @@ export class CoursesListComponent implements OnInit, OnDestroy {
         this.storeCourses.dispatch(loadCoursesSuccess({ courses }));
       },
       error: (error: any) => {
-        console.warn('An error was ocurred');
         this.storeCourses.dispatch(loadCoursesFailure(error));
+        throw new Error(`An error was ocurred ${error}`);
       },
     });
     this.courses$ = this.storeCourses.select(selectCourses);
@@ -63,12 +66,30 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   deleteCourse(course: Course) {
-    this.storeCourses.dispatch(deleteCourse({ course }));
-    this._snackbar.open('Course deleted successfully', '  ', {
-      panelClass: ['snackbar--success'],
-      verticalPosition: 'top',
-      horizontalPosition: 'end',
-      duration: 3000,
+    this.storeSession.select(selectSessionActive).subscribe((data: Session) => {
+      if (
+        data.userInfo?.type === 'admin' ||
+        data.userInfo?.type === 'developer'
+      ) {
+        this.storeCourses.dispatch(deleteCourse({ course }));
+        this._snackbar.open('Course deleted successfully', '  ', {
+          panelClass: ['snackbar--success'],
+          verticalPosition: 'top',
+          horizontalPosition: 'end',
+          duration: 3000,
+        });
+      } else {
+        this._snackbar.open(
+          'You do not have permissions to access this site',
+          '  ',
+          {
+            panelClass: ['snackbar--warning'],
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+            duration: 3000,
+          }
+        );
+      }
     });
   }
 

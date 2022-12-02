@@ -7,16 +7,15 @@
           <p headerFont>{{ tittle }} user</p>
           <form
             class="requires-validation"
-            [formGroup]="studentForm"
+            [formGroup]="userForm"
             (ngSubmit)="onSubmit()"
           >
             <div class="col-md-12">
               <input
                 class="form-control"
-                [ngClass]="studentForm.get('name')?.valid ? ' is-valid' : ''"
+                [ngClass]="userForm.get('name')?.valid ? ' is-valid' : ''"
                 [ngClass]="
-                  studentForm.get('name')?.touched &&
-                  studentForm.get('name')?.invalid
+                  userForm.get('name')?.touched && userForm.get('name')?.invalid
                     ? 'is-invalid'
                     : ''
                 "
@@ -27,8 +26,7 @@
               />
               <div
                 *ngIf="
-                  studentForm.get('name')?.touched &&
-                  studentForm.get('name')?.valid
+                  userForm.get('name')?.touched && userForm.get('name')?.valid
                 "
                 class="text-success"
               >
@@ -36,7 +34,7 @@
               </div>
 
               <small
-                *ngIf="studentForm.get('name')?.touched && studentForm.get('name')?.errors?.['required']"
+                *ngIf="userForm.get('name')?.touched && userForm.get('name')?.errors?.['required']"
                 class="text-danger"
               >
                 First name field cannot be blank!
@@ -45,10 +43,10 @@
             <div class="col-md-12">
               <input
                 class="form-control"
-                [ngClass]="studentForm.get('surname')?.valid ? ' is-valid' : ''"
+                [ngClass]="userForm.get('surname')?.valid ? ' is-valid' : ''"
                 [ngClass]="
-                  studentForm.get('surname')?.touched &&
-                  studentForm.get('surname')?.invalid
+                  userForm.get('surname')?.touched &&
+                  userForm.get('surname')?.invalid
                     ? 'is-invalid'
                     : ''
                 "
@@ -59,8 +57,8 @@
               />
               <div
                 *ngIf="
-                  studentForm.get('surname')?.touched &&
-                  studentForm.get('surname')?.valid
+                  userForm.get('surname')?.touched &&
+                  userForm.get('surname')?.valid
                 "
                 class="text-success"
               >
@@ -68,7 +66,7 @@
               </div>
 
               <small
-                *ngIf="studentForm.get('surname')?.touched && studentForm.get('surname')?.errors?.['required']"
+                *ngIf="userForm.get('surname')?.touched && userForm.get('surname')?.errors?.['required']"
                 class="text-danger"
               >
                 Last name field cannot be blank!
@@ -78,14 +76,13 @@
               <input
                 class="form-control"
                 [ngClass]="
-                  studentForm.get('email')?.touched &&
-                  studentForm.get('email')?.valid
+                  userForm.get('email')?.touched && userForm.get('email')?.valid
                     ? 'form-control is-valid'
                     : ''
                 "
                 [ngClass]="
-                  studentForm.get('email')?.touched &&
-                  studentForm.get('email')?.invalid
+                  userForm.get('email')?.touched &&
+                  userForm.get('email')?.invalid
                     ? 'is-invalid'
                     : ''
                 "
@@ -96,15 +93,14 @@
               />
               <small
                 *ngIf="
-                  studentForm.get('email')?.touched &&
-                  studentForm.get('email')?.valid
+                  userForm.get('email')?.touched && userForm.get('email')?.valid
                 "
                 class="text-success"
               >
                 Email field is valid!
               </small>
               <small
-                *ngIf="studentForm.get('email')?.touched && studentForm.get('email')?.errors?.['required']"
+                *ngIf="userForm.get('email')?.touched && userForm.get('email')?.errors?.['required']"
                 class="text-danger"
               >
                 Email field cannot be blank!
@@ -115,14 +111,14 @@
               <input
                 class="form-control"
                 [ngClass]="
-                  studentForm.get('password')?.touched &&
-                  studentForm.get('password')?.valid
+                  userForm.get('password')?.touched &&
+                  userForm.get('password')?.valid
                     ? 'form-control is-valid'
                     : ''
                 "
                 [ngClass]="
-                  studentForm.get('password')?.touched &&
-                  studentForm.get('password')?.invalid
+                  userForm.get('password')?.touched &&
+                  userForm.get('password')?.invalid
                     ? 'is-invalid'
                     : ''
                 "
@@ -133,15 +129,15 @@
               />
               <small
                 *ngIf="
-                  studentForm.get('password')?.touched &&
-                  studentForm.get('password')?.valid
+                  userForm.get('password')?.touched &&
+                  userForm.get('password')?.valid
                 "
                 class="text-success"
               >
                 Password field is valid!
               </small>
               <small
-                *ngIf="studentForm.get('password')?.touched && studentForm.get('password')?.errors?.['required']"
+                *ngIf="userForm.get('password')?.touched && userForm.get('password')?.errors?.['required']"
                 class="text-danger"
               >
                 Password field cannot be blank!
@@ -190,14 +186,14 @@
               >
               <small
                 *ngIf="
-                  studentForm.get('gender')?.touched &&
-                  studentForm.get('gender')?.valid
+                  userForm.get('gender')?.touched &&
+                  userForm.get('gender')?.valid
                 "
                 class="text-success mv-up"
                 >You selected a gender!</small
               >
               <small
-                *ngIf="studentForm.get('gender')?.touched && studentForm.get('gender')?.errors?.['required']"
+                *ngIf="userForm.get('gender')?.touched && userForm.get('gender')?.errors?.['required']"
                 class="text-danger mv-up"
                 >Please select a gender!</small
               >
@@ -206,12 +202,10 @@
             <div class="col-md-12">
               <input
                 class="form-control"
+                [ngClass]="userForm.get('birthdate')?.valid ? 'is-valid' : ''"
                 [ngClass]="
-                  studentForm.get('birthdate')?.valid ? 'is-valid' : ''
-                "
-                [ngClass]="
-                  studentForm.get('birthdate')?.touched &&
-                  studentForm.get('birthdate')?.invalid
+                  userForm.get('birthdate')?.touched &&
+                  userForm.get('birthdate')?.invalid
                     ? 'is-invalid'
                     : ''
                 "
@@ -222,23 +216,89 @@
               />
               <small
                 *ngIf="
-                  studentForm.get('birthdate')?.touched &&
-                  studentForm.get('birthdate')?.valid
+                  userForm.get('birthdate')?.touched &&
+                  userForm.get('birthdate')?.valid
                 "
                 class="text-success"
                 >Birthdate field is valid!</small
               >
               <small
-                *ngIf="studentForm.get('birthdate')?.touched && studentForm.get('birthdate')?.errors?.['required']"
+                *ngIf="userForm.get('birthdate')?.touched && userForm.get('birthdate')?.errors?.['required']"
                 class="text-danger"
               >
                 Birthdate field cannot be blank!
               </small>
             </div>
 
+            <div class="col-md-12 mt-3">
+              <label class="mb-3 mr-3">Type of user: </label>
+              <input
+                type="radio"
+                class="btn-check"
+                name="type"
+                formControlName="type"
+                value="student"
+                id="student"
+              />
+              <label class="btn btn-sm btn-outline-primary" for="student"
+                >Student</label
+              >
+
+              <input
+                type="radio"
+                class="btn-check"
+                name="type"
+                formControlName="type"
+                value="teacher"
+                id="teacher"
+                autocomplete="off"
+              />
+              <label class="btn btn-sm btn-outline-primary" for="teacher"
+                >Teacher</label
+              >
+
+              <input
+                type="radio"
+                class="btn-check"
+                name="type"
+                formControlName="type"
+                value="admin"
+                id="admin"
+                autocomplete="off"
+              />
+              <label class="btn btn-sm btn-outline-primary" for="admin"
+                >Admin</label
+              >
+              <input
+                type="radio"
+                class="btn-check"
+                name="type"
+                formControlName="type"
+                value="developer"
+                id="developer"
+                autocomplete="off"
+              />
+              <label class="btn btn-sm btn-outline-primary" for="developer"
+                >Developer</label
+              >
+              <small
+                *ngIf="
+                  userForm.get('type')?.touched && userForm.get('type')?.valid
+                "
+                class="text-success"
+                >You select a type of user!</small
+              >
+              <small
+                *ngIf="userForm.get('type')?.touched && userForm.get('type')?.errors?.['required']"
+                class="text-danger"
+              >
+                Type field cannot be blank!
+              </small>
+            </div>
+
             <div class="form-button mt-3" *ngIf="tittle !== 'Consult'">
               <button
-                [disabled]="buttonDisable || studentForm.invalid"
+                [disabled]="buttonDisable || userForm.invalid"
                 id="submit"
                 type="submit"
                 class="btn btn-primary w-100"

@@ -76,7 +76,6 @@ export class NewCourseComponent implements OnInit {
       this.activatedRoute.params
         .pipe(switchMap(({ id }) => this.coursesService.GetCourseById(id)))
         .subscribe((student) => {
-          console.log(student);
           this.courseForm.patchValue(student),
             (this.tittle = 'Consult'),
             this.courseForm.disable(),

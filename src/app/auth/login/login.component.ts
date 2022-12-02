@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { SessionService } from 'src/app/core/services/session.service';
 import { loadSessionActive } from 'src/app/core/state/session.actions';
 import { Session } from 'src/app/models/session';
-import { Student } from 'src/app/models/students';
+import { User } from 'src/app/models/users';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
     this.sessionService
       .login(this.loginForm.value)
-      .subscribe((usuario: Student) => {
+      .subscribe((usuario: User) => {
         if (usuario) {
           this.storeSession.dispatch(
             loadSessionActive({ currentUser: usuario })

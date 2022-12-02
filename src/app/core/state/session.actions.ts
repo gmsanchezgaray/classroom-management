@@ -7,3 +7,8 @@ export const loadSessionActive = createAction(
   '[Session] Load Session Active',
   props<{ currentUser: Student }>()
 );
+
+export const deleteSession = createAction(
+  '[Session] Delete Session Active',
+  props<{ sessionActive: boolean }>()
+);

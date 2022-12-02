@@ -10,3 +10,8 @@ export const selectSessionActive = createSelector(
   selectSessionState,
   (state) => state
 );
+
+export const deleteSession = createSelector(
+  selectSessionState,
+  (state) => state
+);

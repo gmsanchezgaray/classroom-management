@@ -22,7 +22,7 @@ export class StudentsEffects {
     );
   });
 
-  addCourse$ = createEffect(() => {
+  addStudent$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(StudentsActions.addStudent),
       concatMap(({ student }) =>
