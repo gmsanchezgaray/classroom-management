@@ -1,0 +1,255 @@
+<section class="h-100">
+  <div class="container h-100">
+    <div class="row align-items-center justify-content-md-center h-100">
+      <div class="card-wrapper col-md-6">
+        <div class="card">
+          <div class="card-header">Register User</div>
+          <div class="card-body">
+            <form
+              [formGroup]="registerForm"
+              (ngSubmit)="registerUser()"
+              class="my-login-validation"
+            >
+              <div class="col-md-12">
+                <input
+                  class="form-control"
+                  [ngClass]="registerForm.get('name')?.valid ? ' is-valid' : ''"
+                  [ngClass]="
+                    registerForm.get('name')?.touched &&
+                    registerForm.get('name')?.invalid
+                      ? 'is-invalid'
+                      : ''
+                  "
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  formControlName="name"
+                />
+                <div
+                  *ngIf="
+                    registerForm.get('name')?.touched &&
+                    registerForm.get('name')?.valid
+                  "
+                  class="text-success"
+                >
+                  First name field is valid!
+                </div>
+
+                <small
+                  *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.errors?.['required']"
+                  class="text-danger"
+                >
+                  First name field cannot be blank!
+                </small>
+              </div>
+              <div class="col-md-12 mt-3">
+                <input
+                  class="form-control"
+                  [ngClass]="
+                    registerForm.get('surname')?.valid ? ' is-valid' : ''
+                  "
+                  [ngClass]="
+                    registerForm.get('surname')?.touched &&
+                    registerForm.get('surname')?.invalid
+                      ? 'is-invalid'
+                      : ''
+                  "
+                  type="text"
+                  name="surname"
+                  placeholder="Last name"
+                  formControlName="surname"
+                />
+                <div
+                  *ngIf="
+                    registerForm.get('surname')?.touched &&
+                    registerForm.get('surname')?.valid
+                  "
+                  class="text-success"
+                >
+                  Last name field is valid!
+                </div>
+
+                <small
+                  *ngIf="registerForm.get('surname')?.touched && registerForm.get('surname')?.errors?.['required']"
+                  class="text-danger"
+                >
+                  Last name field cannot be blank!
+                </small>
+              </div>
+              <div class="col-md-12 mt-3">
+                <input
+                  class="form-control"
+                  [ngClass]="
+                    registerForm.get('email')?.touched &&
+                    registerForm.get('email')?.valid
+                      ? 'form-control is-valid'
+                      : ''
+                  "
+                  [ngClass]="
+                    registerForm.get('email')?.touched &&
+                    registerForm.get('email')?.invalid
+                      ? 'is-invalid'
+                      : ''
+                  "
+                  type="email"
+                  name="email"
+                  placeholder="E-mail Address"
+                  formControlName="email"
+                />
+                <small
+                  *ngIf="
+                    registerForm.get('email')?.touched &&
+                    registerForm.get('email')?.valid
+                  "
+                  class="text-success"
+                >
+                  Email field is valid!
+                </small>
+                <small
+                  *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['required']"
+                  class="text-danger"
+                >
+                  Email field cannot be blank!
+                </small>
+              </div>
+
+              <div class="col-md-12 mt-3">
+                <input
+                  class="form-control"
+                  [ngClass]="
+                    registerForm.get('password')?.touched &&
+                    registerForm.get('password')?.valid
+                      ? 'form-control is-valid'
+                      : ''
+                  "
+                  [ngClass]="
+                    registerForm.get('password')?.touched &&
+                    registerForm.get('password')?.invalid
+                      ? 'is-invalid'
+                      : ''
+                  "
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  formControlName="password"
+                />
+                <small
+                  *ngIf="
+                    registerForm.get('password')?.touched &&
+                    registerForm.get('password')?.valid
+                  "
+                  class="text-success"
+                >
+                  Password field is valid!
+                </small>
+                <small
+                  *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['required']"
+                  class="text-danger"
+                >
+                  Password field cannot be blank!
+                </small>
+              </div>
+
+              <div class="col-md-12 mt-3">
+                <label class="mb-3 mr-3" for="gender">Gender: </label>
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="gender"
+                  formControlName="gender"
+                  value="Male"
+                  id="Male"
+                />
+                <label class="btn btn-sm btn-outline-primary" for="Male"
+                  >Male</label
+                >
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="gender"
+                  formControlName="gender"
+                  value="Female"
+                  id="Female"
+                  autocomplete="off"
+                />
+                <label class="btn btn-sm btn-outline-primary" for="Female"
+                  >Female</label
+                >
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="gender"
+                  formControlName="gender"
+                  value="Other"
+                  id="Other"
+                  autocomplete="off"
+                />
+                <label class="btn btn-sm btn-outline-primary" for="Other"
+                  >Other</label
+                >
+                <small
+                  *ngIf="
+                    registerForm.get('gender')?.touched &&
+                    registerForm.get('gender')?.valid
+                  "
+                  class="text-success mv-up"
+                  >You selected a gender!</small
+                >
+                <small
+                  *ngIf="registerForm.get('gender')?.touched && registerForm.get('gender')?.errors?.['required']"
+                  class="text-danger mv-up"
+                  >Please select a gender!</small
+                >
+              </div>
+
+              <div class="col-md-12">
+                <input
+                  class="form-control"
+                  [ngClass]="
+                    registerForm.get('birthdate')?.valid ? 'is-valid' : ''
+                  "
+                  [ngClass]="
+                    registerForm.get('birthdate')?.touched &&
+                    registerForm.get('birthdate')?.invalid
+                      ? 'is-invalid'
+                      : ''
+                  "
+                  type="date"
+                  name="birthdate"
+                  placeholder="dd/mm/Yyyy"
+                  formControlName="birthdate"
+                />
+                <small
+                  *ngIf="
+                    registerForm.get('birthdate')?.touched &&
+                    registerForm.get('birthdate')?.valid
+                  "
+                  class="text-success"
+                  >Birthdate field is valid!</small
+                >
+                <small
+                  *ngIf="registerForm.get('birthdate')?.touched && registerForm.get('birthdate')?.errors?.['required']"
+                  class="text-danger"
+                >
+                  Birthdate field cannot be blank!
+                </small>
+              </div>
+
+              <div class="form-group my-3">
+                <button type="submit" class="btn btn-primary btn-block w-100">
+                  Register
+                </button>
+              </div>
+              <div class="mt-4 text-center">
+                I have an account <a [routerLink]="['/auth/login']">Sign In</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

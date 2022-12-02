@@ -37,7 +37,7 @@ export class AuthGuard
         if (session.sessionActive) {
           return true;
         } else {
-          this.router.navigate(['login']);
+          this.router.navigate(['/auth/login']);
           return false;
         }
       })

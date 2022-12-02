@@ -4,11 +4,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { switchMap } from 'rxjs';
-// import { StudentState } from 'src/app/models/student.state';
+import { UserState } from 'src/app/models/user.state copy';
 import { User } from 'src/app/models/users';
 import { UtilsService } from 'src/app/services/utils.service';
 import { UsersService } from '../../services/users.service';
-// import { addStudent, updateStudent } from '../../state/students.actions';
+import { addUser, updateUser } from '../../state/users.actions';
 
 @Component({
   selector: 'app-new-user',
@@ -27,7 +27,8 @@ export class NewUserComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private usersService: UsersService,
     private _snackbar: MatSnackBar,
-    private utilsService: UtilsService // private storeStudents: Store<StudentState>
+    private utilsService: UtilsService,
+    private storeUsers: Store<UserState>
   ) {}
 
   ngOnInit(): void {
@@ -98,7 +99,7 @@ export class NewUserComponent implements OnInit {
         ...this.userForm.value,
       };
 
-      // this.storeStudents.dispatch(updateStudent({ user }));
+      this.storeUsers.dispatch(updateUser({ user }));
       this._snackbar.open('User updated successfully', '  ', {
         panelClass: ['snackbar--success'],
         verticalPosition: 'top',
@@ -114,8 +115,8 @@ export class NewUserComponent implements OnInit {
       ...this.userForm.value,
     };
 
-    // this.storeStudents.dispatch(addStudent({ user }));
-    this._snackbar.open('Usert created successfully', '  ', {
+    this.storeUsers.dispatch(addUser({ user }));
+    this._snackbar.open('User created successfully', '  ', {
       panelClass: ['snackbar--success'],
       verticalPosition: 'top',
       horizontalPosition: 'end',

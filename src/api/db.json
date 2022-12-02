@@ -136,6 +136,15 @@
       "birthdate": "1995-04-01",
       "gender": "Other",
       "type": "teacher"
+    },
+    {
+      "id": "811d73d2-7acf-f5a2-bc44ef5a",
+      "name": "Eren",
+      "surname": "Yaegger",
+      "email": "eYaegger@gmail.com",
+      "password": "12345678",
+      "birthdate": "1992-12-07",
+      "gender": "Other"
     }
   ],
   "courses": [
