@@ -36,6 +36,6 @@ export class ToolbarComponent implements OnInit {
 
   logout() {
     this.storeSession.dispatch(deleteSession({ sessionActive: false }));
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/auth/login');
   }
 }

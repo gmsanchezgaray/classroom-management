@@ -106,7 +106,7 @@ export class NewUserComponent implements OnInit {
         horizontalPosition: 'end',
         duration: 3000,
       });
-      this.router.navigateByUrl('students');
+      this.router.navigateByUrl('/users');
       return;
     }
 
